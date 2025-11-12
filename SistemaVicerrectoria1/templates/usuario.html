@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vicerrectoría Académica - ETITC</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <!-- Barra superior -->
+    <div class="topbar">
+        <div class="topbar-left">Tutor Web — Panel Estudiante</div>
+    </div>
+
+    <!-- Menú lateral -->
+    <nav id="sidebar">
+        <h2>Vicerrectoría Académica</h2>
+        <ul>
+            <li>
+                <a href="#" onclick="toggleSubMenu('subcontenido')">📘 Contenido <span class="arrow">&#9662;</span></a>
+                <ul id="subcontenido" class="submenu">
+                    <li><a href="#" onclick="mostrarSeccion('materiales')">Semilleros de investigación</a></li>
+                    <li><a href="#" onclick="mostrarSeccion('guias')">Convocatorias</a></li>
+                    <li><a href="#" onclick="mostrarSeccion('apoyo')">Redes de investigación estudiantil</a></li>
+                </ul>
+            </li>
+            <li><a href="#" onclick="mostrarSeccion('evaluacion')">📝 Evaluación</a></li>
+            <li><a href="#" onclick="mostrarSeccion('resultados')">📊 Consultar resultados</a></li>
+        </ul>
+
+        <!-- Cerrar sesión abajo -->
+        <div class="logout-option">
+            <a href="#" onclick="mostrarSeccion('logout')">🚪 Cerrar sesión</a>
+        </div>
+    </nav>
+
+    <!-- Encabezado -->
+    <header>
+        <h1>Panel del Estudiante</h1>
+    </header>
+
+    <!-- Contenido principal -->
+    <main id="main-content">
+        <section id="inicio" class="active">
+            <div class="panel">
+                <h2 class="panel-title">Bienvenido/a al sistema académico</h2>
+                <p>Selecciona una opción en el menú para comenzar.</p>
+            </div>
+        </section>
+
+        <section id="materiales">
+            <div class="panel">
+                <h2 class="panel-title">Semilleros de investigación</h2>
+                <p>Aquí podrás ver los semilleros de investigacion actuales.</p>
+            </div>
+        </section>
+
+        <section id="guias">
+            <div class="panel">
+                <h2 class="panel-title">Convocatorias</h2>
+                <p>Aquí podrás ver las Convocatorias vigentes.</p>
+            </div>
+        </section>
+
+        <section id="apoyo">
+            <div class="panel">
+                <h2 class="panel-title">Redes de investigación estudiantil</h2>
+                <p>Aquí podrás ver las Redes de investigación estudiantil.</p>
+            </div>
+        </section>
+
+        <section id="evaluacion">
+            <div class="panel">
+                <h2 class="panel-title">📝 Evaluaciones</h2>
+                <p>Aquí aparecerán tus evaluaciones programadas o pendientes.</p>
+            </div>
+        </section>
+
+        <section id="resultados">
+            <div class="panel">
+                <h2 class="panel-title">📊 Consultar resultados</h2>
+                <table>
+                    <tr>
+                        <th>Intentos</th>
+                        <th>Nota cuantitativa</th>
+                        <th>Nota cualitativa</th>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>4.5</td>
+                        <td>Excelente</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>4.0</td>
+                        <td>Bueno</td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>3.8</td>
+                        <td>Aceptable</td>
+                    </tr>
+                </table>
+            </div>
+        </section>
+
+        <section id="logout">
+            <div class="logout-box">
+                <h2>🚪 Cerrar sesión</h2>
+                <p>Has cerrado sesión correctamente. ¡Hasta pronto!</p>
+            </div>
+        </section>
+    </main>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>
