@@ -1,0 +1,132 @@
+/* Body y fondo */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Times New Roman', sans-serif;
+    background: linear-gradient(150deg, #FFFFFF, #277DB2);
+    height: 100vh;
+}
+
+/* Contenedor del formulario */
+.formulario {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 400px;
+    background: white;
+    border-radius: 10px;
+    box-sizing: border-box;
+    padding: 40px 40px 50px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.1);
+}
+
+/* Título */
+.formulario h1 {
+    text-align: center;
+    padding-bottom: 20px;
+    border-bottom: 1px solid silver;
+    margin: 0 0 30px 0;
+}
+
+/* Grupo de input con label y span */
+.input-group {
+    position: relative;
+    margin: 30px 0;
+    border-bottom: 2px solid #adadad;
+}
+
+/* Inputs */
+.input-group input {
+    width: 100%;
+    padding: 0 5px;
+    height: 40px;
+    font-size: 16px;
+    border: none;
+    background: none;
+    outline: none;
+    box-sizing: border-box;
+}
+
+/* Labels */
+.input-group label {
+    position: absolute;
+    top: 50%;
+    left: 5px;
+    color: #adadad;
+    transform: translateY(-50%);
+    font-size: 16px;
+    pointer-events: none;
+    transition: top 0.3s ease, color 0.3s ease;
+}
+
+/* Línea azul animada */
+.input-group span::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: #277DB2;
+    transition: width 0.3s ease;
+}
+
+/* Cuando input está enfocado o válido */
+.input-group input:focus ~ span::before,
+.input-group input:valid ~ span::before {
+    width: 100%;
+}
+
+.input-group input:focus ~ label,
+.input-group input:valid ~ label {
+    top: -5px;
+    color: #6C3483;
+}
+
+/* Texto recordar */
+.recordar {
+    margin: -10px 0 20px 5px;
+    color: blue;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.recordar:hover {
+    text-decoration: underline;
+}
+
+/* Botón submit */
+input[type="submit"] {
+    width: 100%;
+    height: 50px;
+    border: none;
+    background: #277DB2;
+    border-radius: 25px;
+    font-size: 18px;
+    color: #FFFFFF;
+    cursor: pointer;
+    outline: none;
+    transition: background 0.5s;
+}
+
+input[type="submit"]:hover {
+    background: #1e5a8a;
+}
+
+/* Registro */
+.registrarse {
+    margin: 30px 0 0;
+    text-align: center;
+    font-size: 16px;
+    color: black;
+}
+
+.registrarse a {
+    color: #277DB2;
+    text-decoration: none;
+}
+
+.registrarse a:hover {
+    text-decoration: underline;
+}
