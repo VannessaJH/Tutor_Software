@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { AuthService } from '../../services/apiService.js';
 import './AuthCommon.css';
-import './Login.css';       // Estilos específicos
+import './Login.css';      
 
 const Login = ({ onLoginSuccess, onSwitchView }) => {
     const [formData, setFormData] = useState({
@@ -63,6 +63,8 @@ const Login = ({ onLoginSuccess, onSwitchView }) => {
                 <label>Contraseña</label>
                 <span></span>
             </div>
+
+
 
             <input type="submit" value="Iniciar sesión" />
 

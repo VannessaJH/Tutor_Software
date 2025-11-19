@@ -9,7 +9,6 @@ const Register = ({ onRegisterSuccess, onGoToLogin }) => {
         correo: '',
         contrasena: '',
 
-        rol: 'estudiante'
     });
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
@@ -24,8 +23,8 @@ const Register = ({ onRegisterSuccess, onGoToLogin }) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log('🔍 1. Formulario registro enviado');
-        console.log('🔍 2. Datos registro:', formData);
+        console.log(' 1. Formulario registro enviado');
+        console.log(' 2. Datos registro:', formData);
         setLoading(true);
         setError('');
         setSuccess('');
@@ -38,27 +37,26 @@ const Register = ({ onRegisterSuccess, onGoToLogin }) => {
         }
 
         try {
-            console.log('🔍 3. Llamando AuthService.registrar...');
-            const resultado = await AuthService.registrar({
+            console.log('3. Llamando AuthService.usuario_pendiente...');
+            const resultado = await AuthService.usuario_pendiente({
                 nombre: formData.nombre,
                 correo: formData.correo,
                 contrasena: formData.contrasena,
-                rol: formData.rol
             });
-            console.log('🔍 4. Respuesta backend registro:', resultado);
+            console.log(' 4. Respuesta backend registro:', resultado);
             
             if (resultado.error) {
                 setError(resultado.error);
             } else {
-                setSuccess('¡Registro exitoso! Redirigiendo al login...');
-                // Opcional: redirigir automáticamente después de 2 segundos
-                console.log('🔍 5. Registro exitoso');
+                setSuccess('SU solicitud ha sido enviada al administrador...');
+           
+                console.log(' 5. Uusario en espera');
                 setTimeout(() => {
                     onGoToLogin();
                 }, 2000);
             }
         } catch (error) {
-            console.log('🔍 6. Error catch:', error);
+            console.log(' 6. Error catch:', error);
             setError('Error de conexión con el servidor');
         } finally {
             setLoading(false);
@@ -104,14 +102,6 @@ const Register = ({ onRegisterSuccess, onGoToLogin }) => {
                 />
                 <label>Contraseña</label>
                 <span></span>
-            </div>
-
-            <div className="select-group">
-                <label>Profesión</label>
-                <select value={formData.rol} onChange={handleChange} name="rol">
-                    <option value="estudiante">Estudiante</option>
-                    <option value="profesor">Profesor</option>
-                </select>
             </div>
 
             <input type="submit" value="Registrarme" />

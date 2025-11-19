@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Login from './Login.js';
 import Register from './Register.js';
+import  AdminDashboard from '../admin/AdminDashboard.jsx';
 import './AuthCommon.css';
 import './Login.css';
 import './Register.css';
@@ -19,7 +20,11 @@ export default function AuthApp() {
     };
 
     if (user) {
-        return <div>Bienvenido {user.nombre}</div>;
+        if (user.rol === 'Administrador') {
+            return <AdminDashboard />;
+        } else {
+            return <div>Bienvenido {user.nombre} (Rol: {user.rol})</div>;
+        }
     }
 
     return currentView === 'login' 
