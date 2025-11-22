@@ -11,11 +11,13 @@
     .accordion-button:not(.collapsed) { background-color: #2e8b5744; color: #2e8b57; }
     .btn-success { background-color: #2e8b57; border: none; }
     footer { background-color: #2e8b57; color: white; text-align: center; padding: 20px; margin-top: 40px; }
+    /* Estilo para las tablas de semilleros */
+    .table-responsive table { font-size: 0.85rem; }
+    .table-responsive thead { background-color: #2e8b57; color: white; }
   </style>
 </head>
 <body>
 
-<!-- NAVBAR -->
 <nav class="navbar navbar-expand-lg navbar-dark" style="background-color:#2e8b57;">
   <div class="container">
     <a class="navbar-brand fw-bold" href="#">Tutor Web - ETITC</a>
@@ -34,14 +36,13 @@
   </div>
 </nav>
 
-<!-- HERO -->
 <section class="hero">
   <div class="container">
     <div class="row align-items-center">
       <div class="col-md-8">
         <h1 class="display-6 fw-bold">Tutor Web de Vicerrectoría de Investigación</h1>
-        <p class="lead">Acompaña, orienta y organiza la participación de la comunidad académica en los procesos de investigación de la ETITC.</p>
-        <p>Explora los semilleros, convocatorias y redes de investigación disponibles.</p>
+        <p class="lead">Acompaña, orienta y organiza la participación de estudiantes y docentes en los procesos de investigación institucional.</p>
+        <p>Explora los semilleros, convocatorias y redes de investigación disponibles para toda la comunidad ETITC.</p>
       </div>
       <div class="col-md-4 text-md-end">
         <img src="https://cdn-icons-png.flaticon.com/512/1055/1055646.png" width="130" alt="Tutor Web"/>
@@ -50,112 +51,1239 @@
   </div>
 </section>
 
-<!-- MAIN -->
 <main class="container my-5">
   <div class="row">
     <div class="col-lg-8">
 
-      <!-- SEMILLEROS -->
       <section id="semilleros" class="mb-5">
         <h2 class="text-success mb-3">Semilleros de investigación</h2>
+        <p class="text-muted">Información basada en el Reglamento de Semilleros (Acuerdo 012 de 2021) y documentos de la VRIET.</p>
+
         <div class="accordion" id="accordionSemilleros">
+
           <div class="accordion-item">
             <h2 class="accordion-header">
-              <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#s1">Semillero de Mecatrónica Aplicada</button>
+              <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#s1">
+                ¿Qué son y cómo funcionan los Semilleros de Investigación?
+              </button>
             </h2>
             <div id="s1" class="accordion-collapse collapse show" data-bs-parent="#accordionSemilleros">
-              <div class="accordion-body">Diseño de un robot SCARA con visión artificial para tareas industriales.</div>
-            </div>
-          </div>
-          <div class="accordion-item">
-            <h2 class="accordion-header">
-              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#s2">Semillero CANSAT</button>
-            </h2>
-            <div id="s2" class="accordion-collapse collapse" data-bs-parent="#accordionSemilleros">
-              <div class="accordion-body">Diseño de nanosatélites académicos para exploración atmosférica.</div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- CONVOCATORIAS -->
-      <section id="convocatorias" class="mb-5">
-        <h2 class="text-success mb-3">Convocatorias</h2>
-        <div class="accordion" id="accordionConvocatorias">
-          <div class="accordion-item">
-            <h2 class="accordion-header">
-              <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#c1">Convocatoria Interna N°18-2025</button>
-            </h2>
-            <div id="c1" class="accordion-collapse collapse show" data-bs-parent="#accordionConvocatorias">
               <div class="accordion-body">
-                Financiamiento a proyectos de investigación institucionales. Cierre: 30 de noviembre 2025.
-                <div class="mt-3">
-                  <a href="https://www.etitc.edu.co/es/page/investigacion&convocatorias" target="_blank" class="btn btn-success btn-sm">Ver convocatorias oficiales ETITC</a>
-                </div>
+                <p>
+                  Los **Semilleros de Investigación** de la ETITC son grupos constituidos por estudiantes de los programas académicos de Educación Superior, dirigidos por un docente.
+                </p>
+                <p>
+                  Motivados por su espíritu de indagación, se reúnen en torno a un problema de investigación. A través de la elaboración de un proyecto, buscan **visualizar problemáticas, aportar discusiones y posibles soluciones** a una determinada temática, articulada con los intereses de las líneas y grupos de investigación institucionales.
+                </p>
+                <p class="small text-muted">*(Fuente: Articulo 1, Acuerdo 012 de 2021)*</p>
               </div>
             </div>
           </div>
-        </div>
-      </section>
 
-      <!-- REDES -->
-      <section id="redes" class="mb-5">
-        <h2 class="text-success mb-3">Redes de investigación estudiantil</h2>
-        <div class="accordion" id="accordionRedes">
           <div class="accordion-item">
             <h2 class="accordion-header">
-              <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#r1">REDIETITC</button>
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#s2">
+                Objetivos del Semillero e Investigación Estudiantil
+              </button>
             </h2>
-            <div id="r1" class="accordion-collapse collapse show" data-bs-parent="#accordionRedes">
-              <div class="accordion-body">Red institucional creada en 2022 para articular los semilleros y fortalecer la investigación estudiantil.</div>
+            <div id="s2" class="accordion-collapse collapse" data-bs-parent="#accordionSemilleros">
+              <div class="accordion-body">
+                <p>Los principales objetivos de un Semillero de investigación son:</p>
+                <ul>
+                  <li>**Promover** la capacidad investigativa.</li>
+                  <li>**Propiciar** la interacción entre profesores, investigadores y estudiantes, fomentando el trabajo cooperativo y colaborativo en equipos de trabajo interdisciplinares.</li>
+                  <li>**Gestionar** procesos y estrategias de investigación en beneficio de la comunidad educativa y con impacto positivo en el entorno.</li>
+                  <li>**Fomentar** la cultura de la investigación y cultivar el talento en los estudiantes.</li>
+                </ul>
+                <p class="small text-muted mt-3">**Contacto:** <a href="mailto:semilleros@itc.edu.co">semilleros@itc.edu.co</a> - Tel: +57 6013443000 ext.: 161</p>
+              </div>
             </div>
           </div>
-        </div>
+
+          <div class="accordion-item">
+            <h2 class="accordion-header">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#s3">
+                Red de Investigación Estudiantil (REDIETITC)
+              </button>
+            </h2>
+            <div id="s3" class="accordion-collapse collapse" data-bs-parent="#accordionSemilleros">
+              <div class="accordion-body">
+                <p>La **Red de Investigación Estudiantil de la ETITC ("REDIETITC")** fue creada mediante la **Resolución 362 de 14 de julio de 2022** para agrupar y coordinar las iniciativas estudiantiles.</p>
+                <p>El fomento a la investigación estudiantil incluye actividades como:</p>
+                <ul>
+                  <li>Actividades de formación</li>
+                  <li>Red de investigación estudiantil</li>
+                  <li>Producción multimedia</li>
+                  <li>Encuentros Nacionales e Internacionales de Semilleros</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          
+          <div class="accordion-item">
+            <h2 class="accordion-header">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#s4">
+                Proyectos de Semilleros Activos por Año (Histórico)
+              </button>
+            </h2>
+            <div id="s4" class="accordion-collapse collapse" data-bs-parent="#accordionSemilleros">
+              <div class="accordion-body">
+                <p>La Escuela Tecnológica Instituto Técnico Central mantiene un alto número de semilleros activos. A continuación, se detallan los proyectos por año:</p>
+
+                <div class="accordion" id="accordionAnios">
+                    
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#y2025">
+                                🟢 2025 (33 Semilleros Activos)
+                            </button>
+                        </h2>
+                        <div id="y2025" class="accordion-collapse collapse show" data-bs-parent="#accordionAnios">
+                            <div class="accordion-body p-1">
+                                <div class="table-responsive">
+                                    <table class="table table-striped table-bordered">
+                                        <thead>
+                                            <tr><th>Semillero</th><th>Profesor</th><th>Proyecto</th></tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr><td>Mecatrónica aplicada a la industria</td><td>Juan José Bernal Segura</td><td>Diseño y construcción de un robot scara con visión artificial para detección y selección de objetos</td></tr>
+                                            <tr><td>Virtual Aprende (VIRTUS)</td><td>Eduardo Hernández / Martín Encizo Méndez</td><td>Aprendizaje flexible multimedial</td></tr>
+                                            <tr><td>Automatools (atm)</td><td>Miguel Alfonso Morales Granados</td><td>Desarrollo de un prototipo de trazabilidad de instrumentos industriales</td></tr>
+                                            <tr><td>CANSAT</td><td>Jheyson Fabián Villavisan Buitrago</td><td>Diseñar y construir un prototipo de nanosatélite tipo CANSAT</td></tr>
+                                            <tr><td>Manufactura aditiva (Impresión 3d)</td><td>Javier Muños Tovar</td><td>Impresión 3D, corte láser, escáner 3D</td></tr>
+                                            <tr><td>Cultivando con virtud</td><td>Brian Alejandro Corredor León</td><td>Agricultura urbana inteligente: transformación digital de un cultivo de papa</td></tr>
+                                            <tr><td>Fabricación digital</td><td>Myriam Herrera Paloma</td><td>Creación de un banco de proyectos de mecanismos con corte láser e impresión 3d</td></tr>
+                                            <tr><td>Isqua</td><td>Nelson Castañeda Arias</td><td>Análisis del impacto de estrategias didácticas basadas en programación desconectada en el pensamiento computacional</td></tr>
+                                            <tr><td>Hidrógeno</td><td>Francisco Javier Cano Ravelo</td><td>Evaluación del uso de herramientas pedagógicas para el aprendizaje de producción de hidrógeno</td></tr>
+                                            <tr><td>Materia y energía</td><td>Holman Enrique Cubides Garzón</td><td>Diseño y simulación de pruebas de iluminación circadiana con espectro dinámico usando 4 led rgby</td></tr>
+                                            <tr><td>Mujeres y materialidad</td><td>Isabel Cristina Castellanos Cuellar</td><td>Evaluación del ácido poliláctico (PLA) en ingeniería biomédica y sostenibilidad</td></tr>
+                                            <tr><td>Sapientiam</td><td>José Alfredo Trejos Motato</td><td>Ciberseguridad para todos: capacitación y divulgación para comunidades no técnicas</td></tr>
+                                            <tr><td>Solid Works</td><td>Fabián Guillermo Cortes Sierra</td><td>Metodología efectiva utilizando solidworks como herramienta de apoyo</td></tr>
+                                            <tr><td>Vehículos eléctricos (seve)</td><td>María Ximena Reyes Ortiz</td><td>Mejora de un motor Mazda de combustión para banco de pruebas funcional</td></tr>
+                                            <tr><td>Desarrollo tecnológico sostenible (detec)</td><td>Jorge Enrique Hower</td><td>Desarrollo de alternativas de economía circular para la recuperación y procesamiento de plásticos</td></tr>
+                                            <tr><td>Ecomovilidad</td><td>Pedro Emilio Prieto Garzón</td><td>Construcción y adecuación de un sistema de celdas solares para energizar una bicicleta convencional</td></tr>
+                                            <tr><td>ECOS</td><td>José Francisco Lugo Pinto</td><td>Sistema de protección de carga útil, control de vuelo y monitoreo climático CANSAT</td></tr>
+                                            <tr><td>SIAR</td><td>Alfredo Sánchez Silvera</td><td>Diseño de un prototipo de sensor para detección temprana del hongo de la roya en café</td></tr>
+                                            <tr><td>Domótica</td><td>Wladimir Páez Páez</td><td>Rs seguridad por reconocimiento facial</td></tr>
+                                            <tr><td>GIER</td><td>Germán López</td><td>Diseño banco de pruebas para la enseñanza de energía solar en la ETITC</td></tr>
+                                            <tr><td>Inteligencia Artificial (K-IA)</td><td>Luis Eduardo Baquero Rey</td><td>Análisis predictivo de ventas en comercio electrónico mediante web scraping</td></tr>
+                                            <tr><td>Inteligencia Artificial (K-IA)</td><td>Miguel Hernández Bejarano</td><td>Análisis de sentimientos usando web scraping</td></tr>
+                                            <tr><td>Nuevas tecnologías saludables</td><td>Magda Liliana Rincón Meléndez</td><td>Nuevas tecnologías para ambientes saludables y productivos</td></tr>
+                                            <tr><td>k-immersion</td><td>Sócrates Rojas Amador</td><td>SMARTAXIM</td></tr>
+                                            <tr><td>k-smart</td><td>Alexander Peña Marín</td><td>Detección de figuras geométricas complejas en fotografía aérea con redes neuronales convolucionales</td></tr>
+                                            <tr><td>k-vant</td><td>John Alexander Rico Franco</td><td>Tendencias tecnológicas de la agricultura 4.0 asociadas a los VANTS</td></tr>
+                                            <tr><td>PRO2</td><td>Henry Montero</td><td>Hidrógeno verde y azul: la apuesta para la transición energética en Colombia</td></tr>
+                                            <tr><td>RUAJ-ETITC</td><td>Milton Rodríguez Chavarro</td><td>Matlab: análisis de datos y aplicaciones en ingeniería</td></tr>
+                                            <tr><td>dp4ai</td><td>Sebastián Yepes</td><td>Machine learning y privacidad diferencial: análisis criptográfico para la confidencialidad de datos</td></tr>
+                                            <tr><td>Matter and energy</td><td>Hollman Yesid Piñeros Herrera</td><td>Spartanface security: prototipo de reconocimiento facial para seguridad residencial</td></tr>
+                                            <tr><td>k-cybersec</td><td>Iván Darío Méndez</td><td>Adquisición y análisis forense</td></tr>
+                                            <tr><td>Escritura creativa</td><td>Marisol Briñez Ríos</td><td>Desarrollo de competencias de comunicación oral y escrita en estudiantes de ingeniería mecánica</td></tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#y2024">
+                                🗓️ 2024 (Semestres 1 y 2)
+                            </button>
+                        </h2>
+                        <div id="y2024" class="accordion-collapse collapse" data-bs-parent="#accordionAnios">
+                            <div class="accordion-body p-1">
+                                <p class="text-muted small">Muestra de proyectos activos en los dos semestres de 2024.</p>
+                                <div class="table-responsive">
+                                    <table class="table table-striped table-bordered">
+                                        <thead>
+                                            <tr><th>Semillero</th><th>Profesor</th><th>Proyecto Destacado</th></tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr><td>GIER</td><td>Germán Arturo López Martínez</td><td>Diseño banco de pruebas para la enseñanza de energía solar en la ETITC</td></tr>
+                                            <tr><td>Vehículos eléctricos (SEVE)</td><td>María Ximena Reyes Ortiz</td><td>Guías prácticas del laboratorio de electromovilidad</td></tr>
+                                            <tr><td>SIGE</td><td>Omar López Delgado</td><td>Diseño de un sistema híbrido de energía limpia y sostenible para vivienda rural</td></tr>
+                                            <tr><td>Inteligencia Artificial (K-IA)</td><td>Luis Eduardo Baquero Rey</td><td>Estudio de técnicas de web scraping para la recolección, procesamiento y análisis de datos con IA</td></tr>
+                                            <tr><td>K-Smart</td><td>Alexander Peña Marín</td><td>Detección de figuras geométricas complejas en fotografía aérea usando redes neuronales convolucionales</td></tr>
+                                            <tr><td>Ecomovilidad</td><td>Pedro Emilio Prieto Garzón</td><td>Promover la investigación y el desarrollo de tecnologías limpias y eficientes para la movilidad</td></tr>
+                                            <tr><td>Cultivando con Virtud (CV)</td><td>Brian Alejandro Corredor León</td><td>De la adquisición al análisis: un sistema de información para cultivos urbanos de papa</td></tr>
+                                            <tr><td>Robótica Ambiental</td><td>Sergio Enrique Ramírez Moreno</td><td>Diseño y desarrollo de extrusora de PET</td></tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#y2023">
+                                🗓️ 2023 (Semestres 1 y 2)
+                            </button>
+                        </h2>
+                        <div id="y2023" class="accordion-collapse collapse" data-bs-parent="#accordionAnios">
+                            <div class="accordion-body p-1">
+                                <p class="text-muted small">Muestra de proyectos activos en los dos semestres de 2023.</p>
+                                <div class="table-responsive">
+                                    <table class="table table-striped table-bordered">
+                                        <thead>
+                                            <tr><th>Semillero</th><th>Profesor</th><th>Proyecto Destacado</th></tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr><td>Domótica</td><td>Wladimir Páez Páez</td><td>Identificación dactilar y visual aplicados con Python en ESP32</td></tr>
+                                            <tr><td>Automatools (ATM)</td><td>Miguel Alfonso Morales Granados</td><td>Desarrollo de un prototipo de trazabilidad de instrumentos industriales</td></tr>
+                                            <tr><td>K-Immersion</td><td>Yasbleidy Johana Lesmes Calderón</td><td>Sistema de realidad mixta para entrenamiento de movimientos con dron DJI Agras T10</td></tr>
+                                            <tr><td>Maquinaria Agrícola e Industrial</td><td>Edgar Antonio Bayona Ramírez</td><td>Diseño de tostadora de cacao</td></tr>
+                                            <tr><td>Dieser</td><td>María Flor Monroy González</td><td>Diseño e implementación de un ecolaboratorio sostenible con energías renovables</td></tr>
+                                            <tr><td>Biopolymers</td><td>Ángela Aurora Beltrán Osuna</td><td>Diversificación de productos de 1 solo uso a partir de almidón.</td></tr>
+                                            <tr><td>Procesos e Inspección de Soldadura (PIS)</td><td>Pedro Emilio Prieto Garzón</td><td>Procesos e inspección de soldadura en la ETITC, con enfoque geosocial</td></tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#y2022">
+                                🗓️ 2022 (Semestres 1 y 2)
+                            </button>
+                        </h2>
+                        <div id="y2022" class="accordion-collapse collapse" data-bs-parent="#accordionAnios">
+                            <div class="accordion-body p-1">
+                                <p class="text-muted small">Muestra de proyectos activos en los dos semestres de 2022.</p>
+                                <div class="table-responsive">
+                                    <table class="table table-striped table-bordered">
+                                        <thead>
+                                            <tr><th>Semillero</th><th>Profesor</th><th>Proyecto Destacado</th></tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr><td>Fabricación digital (DPSW)</td><td>Carlos Javier García Castellanos</td><td>Proyecto manufactura aditiva con Solid Works</td></tr>
+                                            <tr><td>Seguridad informática (Sapientiam)</td><td>José Alfredo Trejos Motato</td><td>Análisis de vulnerabilidades a la ETITC</td></tr>
+                                            <tr><td>Mujeres</td><td>Diego Andrés Ardila Valderrama</td><td>Estrategia pedagógica para fortalecer procesos de participación de mujeres ETITC en investigación STEM</td></tr>
+                                            <tr><td>K-Smart (Kerub)</td><td>Alexander Peña Marín</td><td>Proyecto Kerub: prototipo con inteligencia artificial</td></tr>
+                                            <tr><td>Materiales Compuestos (SIMACO)</td><td>Fabián De Jesús Présago</td><td>Procesamiento y caracterización mecánica de un material compuesto a partir de materiales reciclados</td></tr>
+                                            <tr><td>ECOS</td><td>José Francisco Lugo Pinto</td><td>RED. Robot educativo para complementar enseñanza de matemáticas</td></tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+          </div>
+          </div>
       </section>
 
-      <!-- EVALUACIÓN -->
+
+ <section id="convocatorias-investigacion" class="mb-5">
+    <h2 class="text-success mb-3">1. 🔬 Convocatorias Internas Proyectos de Investigación</h2>
+
+    <div class="accordion" id="accordionInternas">
+
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#int18">
+                    Convocatoria Interna N° 18–2025 (Proyecto de Investigación)
+                </button>
+            </h2>
+            <div id="int18" class="accordion-collapse collapse" data-bs-parent="#accordionInternas">
+                <div class="accordion-body">
+                    <a href="https://www.etitc.edu.co/archives/convocatoria1825.pdf" target="_blank"
+                        class="btn btn-success btn-sm">Ver Documento PDF</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#int17">
+                    Convocatoria Interna N° 17–2025 (Proyecto de Innovación)
+                </button>
+            </h2>
+            <div id="int17" class="accordion-collapse collapse" data-bs-parent="#accordionInternas">
+                <div class="accordion-body">
+                    <a href="https://www.etitc.edu.co/archives/convocatoria1725.pdf" target="_blank"
+                        class="btn btn-success btn-sm">Ver Documento PDF</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#int16">
+                    Convocatoria Interna N° 16–2024 (Proyecto de Innovación)
+                </button>
+            </h2>
+            <div id="int16" class="accordion-collapse collapse" data-bs-parent="#accordionInternas">
+                <div class="accordion-body">
+                    <a href="https://www.etitc.edu.co/archives/convocatoria1624.pdf" target="_blank"
+                        class="btn btn-success btn-sm">Ver Documento PDF</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#int15">
+                    Convocatoria Interna N° 15–2024 (Proyecto de Innovación)
+                </button>
+            </h2>
+            <div id="int15" class="accordion-collapse collapse" data-bs-parent="#accordionInternas">
+                <div class="accordion-body">
+                    <a href="https://www.etitc.edu.co/archives/convocatoria1524.pdf" target="_blank"
+                        class="btn btn-success btn-sm">Ver Documento PDF</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#int14">
+                    Convocatoria Interna N° 14–2023 (Proyectos I+D+i)
+                </button>
+            </h2>
+            <div id="int14" class="accordion-collapse collapse" data-bs-parent="#accordionInternas">
+                <div class="accordion-body">
+                    <a href="https://www.etitc.edu.co/archives/convocatoriaidi1423.pdf" target="_blank"
+                        class="btn btn-success btn-sm">Ver Documento PDF</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#int13">
+                    Convocatoria Interna N° 13–2023 (Proyecto de Innovación)
+                </button>
+            </h2>
+            <div id="int13" class="accordion-collapse collapse" data-bs-parent="#accordionInternas">
+                <div class="accordion-body">
+                    <a href="https://www.etitc.edu.co/archives/convocatoria1323.pdf" target="_blank"
+                        class="btn btn-success btn-sm">Ver Documento PDF</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#int12">
+                    Convocatoria Investigación N° 12 (CTeI 2023)
+                </button>
+            </h2>
+            <div id="int12" class="accordion-collapse collapse" data-bs-parent="#accordionInternas">
+                <div class="accordion-body">
+                    <a href="https://www.etitc.edu.co/archives/convocatoriactei23.pdf" target="_blank"
+                        class="btn btn-success btn-sm">Ver Documento PDF</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#int11">
+                    Convocatoria Investigación N° 11 (CTeI 2022)
+                </button>
+            </h2>
+            <div id="int11" class="accordion-collapse collapse" data-bs-parent="#accordionInternas">
+                <div class="accordion-body">
+                    <a href="https://www.etitc.edu.co/archives/convocatoriactei22.pdf" target="_blank"
+                        class="btn btn-success btn-sm">Ver Documento PDF</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#int10">
+                    Convocatoria Investigación N° 10 (VIET X 2022)
+                </button>
+            </h2>
+            <div id="int10" class="accordion-collapse collapse" data-bs-parent="#accordionInternas">
+                <div class="accordion-body">
+                    <a href="https://www.etitc.edu.co/archives/convocatoriavietx22.pdf" target="_blank"
+                        class="btn btn-success btn-sm">Ver Documento PDF</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#int222">
+                    Convocatoria Proyectos Disciplinares N° 02-2022
+                </button>
+            </h2>
+            <div id="int222" class="accordion-collapse collapse" data-bs-parent="#accordionInternas">
+                <div class="accordion-body">
+                    <a href="https://www.etitc.edu.co/archives/convocatoria0222.pdf" target="_blank"
+                        class="btn btn-success btn-sm">Ver Documento PDF</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#int0921">
+                    Convocatoria Interna de Financiación 2021 (N° 09)
+                </button>
+            </h2>
+            <div id="int0921" class="accordion-collapse collapse" data-bs-parent="#accordionInternas">
+                <div class="accordion-body">
+                    <a href="https://www.etitc.edu.co/archives/convocatoria0921.pdf" target="_blank"
+                        class="btn btn-success btn-sm">Ver Documento PDF</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#int0121">
+                    Convocatoria Proyectos Disciplinares N° 01-2021
+                </button>
+            </h2>
+            <div id="int0121" class="accordion-collapse collapse" data-bs-parent="#accordionInternas">
+                <div class="accordion-body">
+                    <a href="https://www.etitc.edu.co/archives/convocatoria0121.pdf" target="_blank"
+                        class="btn btn-success btn-sm">Ver Documento PDF</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#int0820">
+                    Convocatoria Interna de Financiación 2020 (N° 08)
+                </button>
+            </h2>
+            <div id="int0820" class="accordion-collapse collapse" data-bs-parent="#accordionInternas">
+                <div class="accordion-body">
+                    <a href="https://www.etitc.edu.co/archives/convocatoria0820.pdf" target="_blank"
+                        class="btn btn-success btn-sm">Ver Documento PDF</a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#int0719">
+                    Convocatoria Interna de Financiación 2019 (N° 07)
+                </button>
+            </h2>
+            <div id="int0719" class="accordion-collapse collapse" data-bs-parent="#accordionInternas">
+                <div class="accordion-body">
+                    <a href="https://www.etitc.edu.co/archives/convocatoria0719.pdf" target="_blank"
+                        class="btn btn-success btn-sm">Ver Documento PDF</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#int0618">
+                    Convocatoria Interna de Financiación 2018 (N° 06)
+                </button>
+            </h2>
+            <div id="int0618" class="accordion-collapse collapse" data-bs-parent="#accordionInternas">
+                <div class="accordion-body">
+                    <a href="https://www.etitc.edu.co/archives/convocatoria0618.pdf" target="_blank"
+                        class="btn btn-success btn-sm">Ver Documento PDF</a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#int0517">
+                    Convocatoria Interna de Financiación 2017 (N° 05)
+                </button>
+            </h2>
+            <div id="int0517" class="accordion-collapse collapse" data-bs-parent="#accordionInternas">
+                <div class="accordion-body">
+                    <a href="https://www.etitc.edu.co/archives/convocatoria0517.pdf" target="_blank"
+                        class="btn btn-success btn-sm">Ver Documento PDF</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<hr class="my-5">
+
+<section id="estimulos" class="mb-5">
+    <h2 class="text-success mb-3">2. ⭐ Estímulos</h2>
+
+    <div class="accordion" id="accordionEstimulos">
+
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#est252">
+                    Convocatoria de Estímulos a la IIDT N° 02-2025
+                </button>
+            </h2>
+            <div id="est252" class="accordion-collapse collapse" data-bs-parent="#accordionEstimulos">
+                <div class="accordion-body">
+                    <a href="https://www.etitc.edu.co/archives/estimulosiidt252.pdf" target="_blank"
+                        class="btn btn-success btn-sm">Ver Documento PDF</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#est251">
+                    Convocatoria de Estímulos a la IIDT N° 01-2025
+                </button>
+            </h2>
+            <div id="est251" class="accordion-collapse collapse" data-bs-parent="#accordionEstimulos">
+                <div class="accordion-body">
+                    <a href="https://www.etitc.edu.co/archives/estimulosiidt25.pdf" target="_blank"
+                        class="btn btn-success btn-sm">Ver Documento PDF</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#est242">
+                    Convocatoria de Estímulos a la IIDT N° 02-2024
+                </button>
+            </h2>
+            <div id="est242" class="accordion-collapse collapse" data-bs-parent="#accordionEstimulos">
+                <div class="accordion-body">
+                    <a href="https://www.etitc.edu.co/archives/estimulosiidt242.pdf" target="_blank"
+                        class="btn btn-success btn-sm">Ver Documento PDF</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#est241">
+                    Convocatoria de Estímulos a la IIDT N° 01-2024
+                </button>
+            </h2>
+            <div id="est241" class="accordion-collapse collapse" data-bs-parent="#accordionEstimulos">
+                <div class="accordion-body">
+                    <a href="https://www.etitc.edu.co/archives/estimulosiidt24.pdf" target="_blank"
+                        class="btn btn-success btn-sm">Ver Documento PDF</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<hr class="my-5">
+
+<section id="convocatorias-externas" class="mb-5">
+    <h2 class="text-success mb-3">3. 🌎 Convocatorias Externas Proyectos de Investigación (Minciencias)</h2>
+
+    <div class="accordion" id="accordionExternas">
+
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#ext957">
+                    Convocatoria 957 de Minciencias - Categorización Grupos
+                </button>
+            </h2>
+            <div id="ext957" class="accordion-collapse collapse" data-bs-parent="#accordionExternas">
+                <div class="accordion-body">
+                    <a href="https://www.etitc.edu.co/archives/957categorizaciona.pdf" target="_blank"
+                        class="btn btn-success btn-sm">Ver Documento PDF</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#ext894a">
+                    Ampliación plazo Convocatoria 894 de 2021 de Minciencias
+                </button>
+            </h2>
+            <div id="ext894a" class="accordion-collapse collapse" data-bs-parent="#accordionExternas">
+                <div class="accordion-body">
+                    <a href="https://www.etitc.edu.co/archives/ampliacion8942021.pdf" target="_blank"
+                        class="btn btn-success btn-sm">Ver Documento PDF</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#ext894n">
+                    Noticia: Convocatoria 894 de 2021 de Minciencias
+                </button>
+            </h2>
+            <div id="ext894n" class="accordion-collapse collapse" data-bs-parent="#accordionExternas">
+                <div class="accordion-body">
+                    <a href="https://www.etitc.edu.co/es/noticia/convocatoria-894-de-2021-de-minciencias-21" target="_blank"
+                        class="btn btn-success btn-sm">Ir a Noticia</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#ext890">
+                    Proyectos de investigación elegidos Convocatoria 890 de 2020
+                </button>
+            </h2>
+            <div id="ext890" class="accordion-collapse collapse" data-bs-parent="#accordionExternas">
+                <div class="accordion-body">
+                    <a href="https://www.etitc.edu.co/archives/convocatoria89020.pdf" target="_blank"
+                        class="btn btn-success btn-sm">Ver Documento PDF</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<hr class="my-5">
+
+<section id="investigacion-estudiantil" class="mb-5">
+    <h2 class="text-success mb-3">4. 👩‍🎓 Investigación Estudiantil (Semilleros)</h2>
+
+    <div class="accordion" id="accordionEstudiantil">
+        
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#estu252p">
+                    Inscripción Investigación Estudiantil II-2025 (PDF)
+                </button>
+            </h2>
+            <div id="estu252p" class="accordion-collapse collapse" data-bs-parent="#accordionEstudiantil">
+                <div class="accordion-body">
+                    <a href="https://www.etitc.edu.co/archives/inscripcionsemilleros225.pdf" target="_blank"
+                        class="btn btn-success btn-sm">Ver Documento PDF</a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#estu251p">
+                    Inscripción Investigación Estudiantil I-2025 (PDF)
+                </button>
+            </h2>
+            <div id="estu251p" class="accordion-collapse collapse" data-bs-parent="#accordionEstudiantil">
+                <div class="accordion-body">
+                    <a href="https://www.etitc.edu.co/archives/inscripcionsemilleros125.pdf" target="_blank"
+                        class="btn btn-success btn-sm">Ver Documento PDF</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#estu242f">
+                    Formulario de Inscripción Investigación Estudiantil II-2024
+                </button>
+            </h2>
+            <div id="estu242f" class="accordion-collapse collapse" data-bs-parent="#accordionEstudiantil">
+                <div class="accordion-body">
+                    <a href="https://forms.office.com/pages/responsepage.aspx?id=RtBfSWTYZ0ae6FBnl2TYNKkoyu-ILiRJjEabv7xw06dUNlFXUUNOVjZUT0VUVVZLVEtDS0lLVVI3Ty4u&fbclid=IwZXh0bgNhZW0CMTAAAR2DUhouEh4YrmZ0I04zyuUOpB-XXUjLWK0w6PsIYkHa-TJOqC4cx97gkZs_aem_BKAOx5c1uftQKxJ7qxi4vg" target="_blank"
+                        class="btn btn-success btn-sm">Ir a Formulario</a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#estu241f">
+                    Formulario de Inscripción Investigación Estudiantil I-2024
+                </button>
+            </h2>
+            <div id="estu241f" class="accordion-collapse collapse" data-bs-parent="#accordionEstudiantil">
+                <div class="accordion-body">
+                    <a href="https://forms.office.com/pages/responsepage.aspx?id=RtBfSWTYZ0ae6FBnl2TYNKkoyu-ILiRJjEabv7xw06dUNDRDM1lWTkVKWUxIVFhVSDgyU0lXTVFJWC4u&route=shorturl" target="_blank"
+                        class="btn btn-success btn-sm">Ir a Formulario</a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#estu232fb">
+                    Publicación de Facebook: Inscripción Semilleros II-2023
+                </button>
+            </h2>
+            <div id="estu232fb" class="accordion-collapse collapse" data-bs-parent="#accordionEstudiantil">
+                <div class="accordion-body">
+                    <a href="https://www.facebook.com/etitc/posts/pfbid0iuuVN43Duwz9vYDDkzocNq2erx7wYsXUc2fQrCTEfyKQXpgNnPmQK2YrsLuVugNWl" target="_blank"
+                        class="btn btn-success btn-sm">Ver Post de Facebook</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#estu231fb">
+                    Publicación de Facebook: Inscripción Semilleros I-2023
+                </button>
+            </h2>
+            <div id="estu231fb" class="accordion-collapse collapse" data-bs-parent="#accordionEstudiantil">
+                <div class="accordion-body">
+                    <a href="https://www.facebook.com/etitc/posts/pfbid0J6WwS8GjqioC3aBaGfGLUFqnJetZ7uCs8kfDvACRp3RE7JnrcXnwdaKmBxq1Givyl" target="_blank"
+                        class="btn btn-success btn-sm">Ver Post de Facebook</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#estuE72">
+                    Evento: II Encuentro Interinstitucional de Semilleros
+                </button>
+            </h2>
+            <div id="estuE72" class="accordion-collapse collapse" data-bs-parent="#accordionEstudiantil">
+                <div class="accordion-body">
+                    <a href="https://www.etitc.edu.co/es/evento/72" target="_blank"
+                        class="btn btn-success btn-sm">Ver Evento</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#estu222fb">
+                    Publicación de Facebook: Inscripción Semilleros II-2022
+                </button>
+            </h2>
+            <div id="estu222fb" class="accordion-collapse collapse" data-bs-parent="#accordionEstudiantil">
+                <div class="accordion-body">
+                    <a href="https://www.facebook.com/etitc/posts/pfbid07Ua6yqvjzqE2E7LWZuaWnjri2FSpVNFQD7H21Ucq4N1AxskpfZuoPPyiAiLGmVwEl" target="_blank"
+                        class="btn btn-success btn-sm">Ver Post de Facebook</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#estuBE22">
+                    II Convocatoria Banco de Elegibles (Auxiliar, Asistente, Joven Investigador)
+                </button>
+            </h2>
+            <div id="estuBE22" class="accordion-collapse collapse" data-bs-parent="#accordionEstudiantil">
+                <div class="accordion-body">
+                    <a href="https://www.etitc.edu.co/archives/convocatoriabeinv22.pdf" target="_blank"
+                        class="btn btn-success btn-sm">Ver Documento PDF</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#estuIT22">
+                    Convocatoria de Investigación, Innovación y Tecnología Estudiantil N° 01-2022
+                </button>
+            </h2>
+            <div id="estuIT22" class="accordion-collapse collapse" data-bs-parent="#accordionEstudiantil">
+                <div class="accordion-body">
+                    <a href="https://www.etitc.edu.co/archives/convocatoriainnovaciontec22.pdf" target="_blank"
+                        class="btn btn-success btn-sm">Ver Documento PDF</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#estuMAT22">
+                    Convocatoria Financiación y Adquisición de Materiales para Proyectos de Semilleros 2022-1
+                </button>
+            </h2>
+            <div id="estuMAT22" class="accordion-collapse collapse" data-bs-parent="#accordionEstudiantil">
+                <div class="accordion-body">
+                    <a href="https://www.etitc.edu.co/archives/convocatoriamateriales22.pdf" target="_blank"
+                        class="btn btn-success btn-sm">Ver Documento PDF</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#estuN62">
+                    Noticia: Convocatoria Semilleros de Investigación 2022-1
+                </button>
+            </h2>
+            <div id="estuN62" class="accordion-collapse collapse" data-bs-parent="#accordionEstudiantil">
+                <div class="accordion-body">
+                    <a href="https://www.etitc.edu.co/es/noticia/convocatoria-semilleros-de-investigacion-2022-1-62" target="_blank"
+                        class="btn btn-success btn-sm">Ir a Noticia</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#estuN10">
+                    Noticia: Inscripción Semilleros I-2022
+                </button>
+            </h2>
+            <div id="estuN10" class="accordion-collapse collapse" data-bs-parent="#accordionEstudiantil">
+                <div class="accordion-body">
+                    <a href="https://www.etitc.edu.co/es/noticia/10" target="_blank"
+                        class="btn btn-success btn-sm">Ir a Noticia</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#estuBE20">
+                    Convocatoria Banco de Elegibles para Jóvenes Investigadores 2020
+                </button>
+            </h2>
+            <div id="estuBE20" class="accordion-collapse collapse" data-bs-parent="#accordionEstudiantil">
+                <div class="accordion-body">
+                    <a href="https://www.etitc.edu.co/archives/convocatoriabeinv20.pdf" target="_blank"
+                        class="btn btn-success btn-sm">Ver Documento PDF</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<hr class="my-5">
+
+<section id="publicaciones" class="mb-5">
+    <h2 class="text-success mb-3">5. 📚 Publicaciones y Evaluación</h2>
+
+    <div class="accordion" id="accordionPublicaciones">
+
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#pubB225">
+                    Convocatoria presentación de textos - Boletines VIET N° 02-2025
+                </button>
+            </h2>
+            <div id="pubB225" class="accordion-collapse collapse" data-bs-parent="#accordionPublicaciones">
+                <div class="accordion-body">
+                    <a href="https://www.etitc.edu.co/archives/convocatoriaboletines225.pdf" target="_blank"
+                        class="btn btn-success btn-sm">Ver Documento PDF</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#pubRL25">
+                    Convocatoria Revista Letras ConCiencia Tecnológica 2025
+                </button>
+            </h2>
+            <div id="pubRL25" class="accordion-collapse collapse" data-bs-parent="#accordionPublicaciones">
+                <div class="accordion-body">
+                    <a href="https://www.etitc.edu.co/archives/convocatoriarlct25.pdf" target="_blank"
+                        class="btn btn-success btn-sm">Ver Documento PDF</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#pubC125">
+                    Convocatoria Cuadernos ETITC N° 01-2025
+                </button>
+            </h2>
+            <div id="pubC125" class="accordion-collapse collapse" data-bs-parent="#accordionPublicaciones">
+                <div class="accordion-body">
+                    <a href="https://www.etitc.edu.co/archives/convocatoriacuadernos125.pdf" target="_blank"
+                        class="btn btn-success btn-sm">Ver Documento PDF</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#pubB125">
+                    Convocatoria presentación de textos - Boletines VIET N° 01-2025
+                </button>
+            </h2>
+            <div id="pubB125" class="accordion-collapse collapse" data-bs-parent="#accordionPublicaciones">
+                <div class="accordion-body">
+                    <a href="https://www.etitc.edu.co/archives/convocatoriaboletines25.pdf" target="_blank"
+                        class="btn btn-success btn-sm">Ver Documento PDF</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#pubP225">
+                    Convocatoria Banco Pares Evaluadores N° 02-2025
+                </button>
+            </h2>
+            <div id="pubP225" class="accordion-collapse collapse" data-bs-parent="#accordionPublicaciones">
+                <div class="accordion-body">
+                    <a href="https://www.etitc.edu.co/archives/convocatoriaparesevaluadores25.pdf" target="_blank"
+                        class="btn btn-success btn-sm">Ver Documento PDF</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#pubP124">
+                    Convocatoria Banco Pares Evaluadores N° 01-2024
+                </button>
+            </h2>
+            <div id="pubP124" class="accordion-collapse collapse" data-bs-parent="#accordionPublicaciones">
+                <div class="accordion-body">
+                    <a href="https://www.etitc.edu.co/archives/convocatoriaparesevaluadores24.pdf" target="_blank"
+                        class="btn btn-success btn-sm">Ver Documento PDF</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#pubC124">
+                    Convocatoria Cuadernos ETITC N° 01-2024
+                </button>
+            </h2>
+            <div id="pubC124" class="accordion-collapse collapse" data-bs-parent="#accordionPublicaciones">
+                <div class="accordion-body">
+                    <a href="https://www.etitc.edu.co/archives/convocatoriacuadernos124.pdf" target="_blank"
+                        class="btn btn-success btn-sm">Ver Documento PDF</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#pubRL24">
+                    Convocatoria Revista Letras ConCiencia Tecnológica 2024
+                </button>
+            </h2>
+            <div id="pubRL24" class="accordion-collapse collapse" data-bs-parent="#accordionPublicaciones">
+                <div class="accordion-body">
+                    <a href="https://www.etitc.edu.co/archives/convocatoriarlct24.pdf" target="_blank"
+                        class="btn btn-success btn-sm">Ver Documento PDF</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#pubC123">
+                    Convocatoria Cuadernos ETITC N° 01-2023
+                </button>
+            </h2>
+            <div id="pubC123" class="accordion-collapse collapse" data-bs-parent="#accordionPublicaciones">
+                <div class="accordion-body">
+                    <a href="https://www.etitc.edu.co/archives/convocatoriacuadernos123.pdf" target="_blank"
+                        class="btn btn-success btn-sm">Ver Documento PDF</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#pubRL23">
+                    Convocatoria Revista Letras ConCiencia Tecnológica N° 01-2023
+                </button>
+            </h2>
+            <div id="pubRL23" class="accordion-collapse collapse" data-bs-parent="#accordionPublicaciones">
+                <div class="accordion-body">
+                    <a href="https://www.etitc.edu.co/archives/convocatoriarlct23.pdf" target="_blank"
+                        class="btn btn-success btn-sm">Ver Documento PDF</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#pubC222">
+                    Convocatoria Cuadernos ETITC N° 02-2022
+                </button>
+            </h2>
+            <div id="pubC222" class="accordion-collapse collapse" data-bs-parent="#accordionPublicaciones">
+                <div class="accordion-body">
+                    <a href="https://www.etitc.edu.co/archives/convocatoriacuadernos222.pdf" target="_blank"
+                        class="btn btn-success btn-sm">Ver Documento PDF</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#pubRL22">
+                    Convocatoria Revista Letras ConCiencia Tecnológica N° 01-2022
+                </button>
+            </h2>
+            <div id="pubRL22" class="accordion-collapse collapse" data-bs-parent="#accordionPublicaciones">
+                <div class="accordion-body">
+                    <a href="https://www.etitc.edu.co/archives/convocatoriarlct22.pdf" target="_blank"
+                        class="btn btn-success btn-sm">Ver Documento PDF</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#pubWOS222">
+                    Convocatoria Financiar Publicación Revistas Indexadas WOS/SCOPUS N° 02-2022
+                </button>
+            </h2>
+            <div id="pubWOS222" class="accordion-collapse collapse" data-bs-parent="#accordionPublicaciones">
+                <div class="accordion-body">
+                    <a href="https://www.etitc.edu.co/archives/pubiliacionrevistasindexadas222.pdf" target="_blank"
+                        class="btn btn-success btn-sm">Ver Documento PDF</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#pubWOS221">
+                    Convocatoria Financiar Publicación Revistas Indexadas WOS/SCOPUS N° 01-2022
+                </button>
+            </h2>
+            <div id="pubWOS221" class="accordion-collapse collapse" data-bs-parent="#accordionPublicaciones">
+                <div class="accordion-body">
+                    <a href="https://www.etitc.edu.co/archives/pubiliacionrevistasindexadas22.pdf" target="_blank"
+                        class="btn btn-success btn-sm">Ver Documento PDF</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#pubRL21">
+                    Convocatoria Revista Letras ConCiencia Tecnológica N° 01-2021
+                </button>
+            </h2>
+            <div id="pubRL21" class="accordion-collapse collapse" data-bs-parent="#accordionPublicaciones">
+                <div class="accordion-body">
+                    <a href="https://www.etitc.edu.co/archives/convocatoriarlct21.pdf" target="_blank"
+                        class="btn btn-success btn-sm">Ver Documento PDF</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#pubC221">
+                    Convocatoria Cuadernos ETITC N° 02-2021
+                </button>
+            </h2>
+            <div id="pubC221" class="accordion-collapse collapse" data-bs-parent="#accordionPublicaciones">
+                <div class="accordion-body">
+                    <a href="https://www.etitc.edu.co/archives/convocatoriacuadernos221.pdf" target="_blank"
+                        class="btn btn-success btn-sm">Ver Documento PDF</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#pubSello">
+                    Sello Red Editorial de la Red de Docentes Transdisciplinar de México
+                </button>
+            </h2>
+            <div id="pubSello" class="accordion-collapse collapse" data-bs-parent="#accordionPublicaciones">
+                <div class="accordion-body">
+                    <a href="https://www.etitc.edu.co/archives/sellorededitorial25.pdf" target="_blank"
+                        class="btn btn-success btn-sm">Ver Documento PDF</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<hr class="my-5">
+
+<section id="innovacion" class="mb-5">
+    <h2 class="text-success mb-3">6. 🚀 Desarrollo Tecnológico e Innovación</h2>
+
+    <div class="accordion" id="accordionInnovacion">
+
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#innR125">
+                    Convocatoria Registro de Productos de Desarrollo Tecnológico e Innovación N° 01-2025
+                </button>
+            </h2>
+            <div id="innR125" class="accordion-collapse collapse" data-bs-parent="#accordionInnovacion">
+                <div class="accordion-body">
+                    <a href="https://www.etitc.edu.co/archives/desarrollotecnologico125.pdf" target="_blank"
+                        class="btn btn-success btn-sm">Ver Documento PDF</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#innR424">
+                    Convocatoria Registro de Productos de Desarrollo Tecnológico e Innovación N° 04-2024
+                </button>
+            </h2>
+            <div id="innR424" class="accordion-collapse collapse" data-bs-parent="#accordionInnovacion">
+                <div class="accordion-body">
+                    <a href="https://www.etitc.edu.co/archives/desarrollotecnologico224.pdf" target="_blank"
+                        class="btn btn-success btn-sm">Ver Documento PDF</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#innBoot">
+                    Bootcamp Blockchain
+                </button>
+            </h2>
+            <div id="innBoot" class="accordion-collapse collapse" data-bs-parent="#accordionInnovacion">
+                <div class="accordion-body">
+                    <a href="https://www.etitc.edu.co/archives/bootcamp24.pdf" target="_blank"
+                        class="btn btn-success btn-sm">Ver Documento PDF</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#innR324">
+                    Convocatoria Registro de Productos de Desarrollo Tecnológico e Innovación N° 03-2024
+                </button>
+            </h2>
+            <div id="innR324" class="accordion-collapse collapse" data-bs-parent="#accordionInnovacion">
+                <div class="accordion-body">
+                    <a href="https://www.etitc.edu.co/archives/desarrollotecnologico24.pdf" target="_blank"
+                        class="btn btn-success btn-sm">Ver Documento PDF</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#innEmpC23">
+                    Plan de Capacitación en Emprendimiento (2023)
+                </button>
+            </h2>
+            <div id="innEmpC23" class="accordion-collapse collapse" data-bs-parent="#accordionInnovacion">
+                <div class="accordion-body">
+                    <a href="https://www.etitc.edu.co/archives/emprendimientoc23.pdf" target="_blank"
+                        class="btn btn-success btn-sm">Ver Documento PDF</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#innEmp323">
+                    Convocatoria para Emprendimiento Tecnológico en Fase de Pre-incubación N° 03-2023
+                </button>
+            </h2>
+            <div id="innEmp323" class="accordion-collapse collapse" data-bs-parent="#accordionInnovacion">
+                <div class="accordion-body">
+                    <a href="https://www.etitc.edu.co/archives/emprendimiento323.pdf" target="_blank"
+                        class="btn btn-success btn-sm">Ver Documento PDF</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#innPI22">
+                    Convocatoria Acompañamiento Propiedad Intelectual N° 02-2022
+                </button>
+            </h2>
+            <div id="innPI22" class="accordion-collapse collapse" data-bs-parent="#accordionInnovacion">
+                <div class="accordion-body">
+                    <a href="https://www.etitc.edu.co/archives/terminosreferenciaebt222.pdf" target="_blank"
+                        class="btn btn-success btn-sm">Ver Documento PDF</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#innEBT21">
+                    Convocatoria Acompañamiento Creación de Empresas de Base Tecnológica 2021
+                </button>
+            </h2>
+            <div id="innEBT21" class="accordion-collapse collapse" data-bs-parent="#accordionInnovacion">
+                <div class="accordion-body">
+                    <a href="https://www.etitc.edu.co/archives/terminosreferenciaebt121.pdf" target="_blank"
+                        class="btn btn-success btn-sm">Ver Documento PDF</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#innInv21">
+                    Convocatoria Acompañamiento Identificación de Invenciones Susceptibles de Patente 2021
+                </button>
+            </h2>
+            <div id="innInv21" class="accordion-collapse collapse" data-bs-parent="#accordionInnovacion">
+                <div class="accordion-body">
+                    <a href="https://www.etitc.edu.co/archives/terminosconvoinvenciones21.pdf" target="_blank"
+                        class="btn btn-success btn-sm">Ver Documento PDF</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#innN26">
+                    Noticia: Nuevo Logro de la ETITC (Convocatoria Fomento Protección Patente)
+                </button>
+            </h2>
+            <div id="innN26" class="accordion-collapse collapse" data-bs-parent="#accordionInnovacion">
+                <div class="accordion-body">
+                    <a href="https://www.etitc.edu.co/es/noticia/nuevo-logro-de-la-etitc-26" target="_blank"
+                        class="btn btn-success btn-sm">Ir a Noticia</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<hr class="my-5">
+
+<section id="ponencias" class="mb-5">
+    <h2 class="text-success mb-3">7. 🗣️ Ponencias Nacionales e Internacionales</h2>
+
+    <div class="accordion" id="accordionPonencias">
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#ponencias2223">
+                    Consolidado de Ponencias Nacionales e Internacionales (2022-2023)
+                </button>
+            </h2>
+            <div id="ponencias2223" class="accordion-collapse collapse" data-bs-parent="#accordionPonencias">
+                <div class="accordion-body">
+                    <a href="https://www.etitc.edu.co/archives/ponenciasnalint122.pdf" target="_blank"
+                        class="btn btn-success btn-sm">Ver Documento PDF</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
       <section id="evaluacion" class="mb-5">
         <h2 class="text-success mb-3">Evaluación y seguimiento</h2>
+        <p class="text-muted">Basado en la Resolución 466 de 2021 y el Reglamento de Semilleros.</p>
+
         <div class="card p-4 shadow-sm">
-          <form id="quizForm">
-            <div class="mb-3">
-              <label class="form-label">1) ¿Cuál es el propósito principal del Tutor Web?</label>
-              <select id="q1" class="form-select">
-                <option value="">--Selecciona--</option>
-                <option value="b">Facilitar acceso al conocimiento investigativo</option>
-                <option value="a">Recaudar fondos</option>
-                <option value="c">Gestionar matrículas</option>
-              </select>
-            </div>
-            <div class="mb-3">
-              <label class="form-label">2) ¿Qué sección permite conocer proyectos activos de investigación?</label>
-              <select id="q2" class="form-select">
-                <option value="">--Selecciona--</option>
-                <option value="a">Semilleros</option>
-                <option value="b">Redes</option>
-                <option value="c">Evaluación</option>
-              </select>
-            </div>
-            <div class="mb-3">
-              <label class="form-label">3) Menciona un beneficio de participar en los semilleros:</label>
-              <input id="q3" class="form-control" placeholder="Escribe tu respuesta...">
-            </div>
-            <div class="mb-3">
-              <label class="form-label">4) ¿Qué tipo de convocatorias existen en la ETITC?</label>
-              <input id="q4" class="form-control" placeholder="Responde brevemente...">
-            </div>
-            <div class="mb-3">
-              <label class="form-label">5) ¿Qué promueve la red REDIETITC?</label>
-              <select id="q5" class="form-select">
-                <option value="">--Selecciona--</option>
-                <option value="a">Competencias deportivas</option>
-                <option value="b">Investigación colaborativa entre semilleros</option>
-                <option value="c">Eventos administrativos</option>
-              </select>
-            </div>
-            <button type="button" class="btn btn-success" id="submitQuiz">Enviar evaluación</button>
-          </form>
-          <div id="quizResult" class="mt-3 fw-semibold text-success"></div>
+          <p>
+            La Vicerrectoría realiza seguimiento a:
+            <ul>
+              <li>Participación de estudiantes en actividades investigativas</li>
+              <li>Formación de competencias en investigación</li>
+              <li>Progreso de los proyectos inscritos en convocatorias</li>
+              <li>Reportes semestrales de semilleros y grupos</li>
+            </ul>
+          </p>
+
+          <p>Adicionalmente, la institución fomenta la capacitación constante para fortalecer las habilidades investigativas en docentes y estudiantes.</p>
+
+          <a href="https://www.etitc.edu.co/archives/res4662021.pdf" target="_blank" class="btn btn-success">
+            Ver resolución oficial de seguimiento
+          </a>
         </div>
       </section>
 
@@ -171,27 +1299,22 @@
       <div class="card shadow-sm">
         <div class="card-body">
           <h5 class="card-title text-success">Destacados</h5>
-          <ul id="highlights" class="list-unstyled mb-0"></ul>
+          <ul id="highlights" class="list-unstyled mb-0">
+            <li>✔ Convocatoria Interna de Investigación 2025</li>
+            <li>✔ **33 Semilleros Activos** en 2025</li>
+            <li>✔ Red Institucional para el Desarrollo Sostenible</li>
+          </ul>
         </div>
       </div>
     </aside>
+
   </div>
 </main>
 
 <footer>
-  <p>Gracias por participar en la autoevaluación del Tutor Web de la Vicerrectoría de Investigación - ETITC.</p>
+  <p>Contenido basado en documentos oficiales de la Vicerrectoría de Investigación — ETITC.</p>
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-<script>
-  document.getElementById('submitQuiz').addEventListener('click', function() {
-    let score = 0;
-    if (document.getElementById('q1').value === 'b') score++;
-    if (document.getElementById('q2').value === 'a') score++;
-    if (document.getElementById('q5').value === 'b') score++;
-    const resultText = `Tu evaluación ha sido enviada. Respondiste correctamente ${score} de 3 preguntas cerradas.`;
-    document.getElementById('quizResult').textContent = resultText;
-  });
-</script>
 </body>
 </html>
