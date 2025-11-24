@@ -8,4 +8,4 @@ class Usuario(Base):
     nombre_usuario = Column(String(100), nullable=False)
     correo = Column(String(100), nullable=False)
     contrasena = Column(String(255), nullable=False)
-    rol = Column(Enum('Administrador', 'Usuaroio'))
+    rol = Column(Enum('Administrador', 'Usuario'), default = 'Usuario')

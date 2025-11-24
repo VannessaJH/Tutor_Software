@@ -8,5 +8,4 @@ class UsuariosPendientes(Base):
     nombre = Column(String(100), nullable = False)
     correo = Column(String(100), nullable = False)
     contrasena = Column(String(255), nullable=False)
-    estado = Column(Enum('Aceptado', 'Pendiente', 'Rechazado' ))
-    rol = Column(Enum('Administrador', 'Usuaroio'))
+    estado = Column(Enum('Aceptado', 'Pendiente', 'Rechazado' ), default = 'Pendiente')
