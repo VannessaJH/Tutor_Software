@@ -6,7 +6,7 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "start": "react-scripts start",
+    "start": "cross-env PORT=3001 react-scripts start",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
@@ -16,8 +16,9 @@
     "react-scripts": "5.0.1"
   },
   "devDependencies": {
-    "vite": "^4.4.5",
-    "@vitejs/plugin-react": "^4.0.3"
+    "@vitejs/plugin-react": "^4.0.3",
+    "cross-env": "^10.1.0",
+    "vite": "^4.4.5"
   },
   "browserslist": {
     "production": [

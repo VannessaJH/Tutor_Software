@@ -7,6 +7,7 @@ print("INICIANDO SCRIPT MAIN.PY")
 
 app = FastAPI(title="Tutor_Software")
 
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["http://localhost:3001", "http://127.0.0.1:3001"],  

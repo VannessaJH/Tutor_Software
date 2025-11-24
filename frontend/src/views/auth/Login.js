@@ -7,7 +7,7 @@ import './Login.css';
 const Login = ({ onLoginSuccess, onSwitchView }) => {
     const [formData, setFormData] = useState({
         usuario: '',
-        contraseña: ''
+        contrasena: ''
     });
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');

@@ -1,5 +1,6 @@
 from sqlalchemy.orm import Session
 from models.user.usuario import Usuario
+from sqlalchemy import update
 from models.user.usuarios_pendientes import UsuariosPendientes
 from passlib.context import CryptContext
 
@@ -71,7 +72,7 @@ class AuthController:
             return {
                 "mensaje": "El usuario ha sido puesto en espera",
                 "id_usuario": usuario_pendiente.id,
-                "rol": usuario_pendiente.rol
+          
             }
             
         except Exception as e:
@@ -87,9 +88,11 @@ class AuthController:
             ).first()
             
             if not usuario:
+                print ("Nombre de usuario incorrecto")
                 return {"error": "Crendeciales incorrectas"}
             
             if not pwd_context.verify(credenciales["contrasena"], usuario.contrasena):
+                print(f"Contraseña para verificar: {credenciales["contrasena"]}, contrasena guardada {usuario.contrasena}, la contraseña es incorrecta")
                 return {"error": "Credenciales incorrectas"}
             
             return {
@@ -111,5 +114,99 @@ class AuthController:
         except Exception as e:
             print(f"Error obteniendo usuarios pendientes: {e}")
             return []
+        
+    @staticmethod
+    def aceptar_usuario(db: Session, id_usuario_pendiente: int):
+        usuario_pendiente = db.query(UsuariosPendientes).filter(
+            UsuariosPendientes.id == id_usuario_pendiente
+        ).first()
+        
+        if not usuario_pendiente:
+            return None 
+
+        nuevo_usuario = Usuario(
+            nombre=usuario_pendiente.nombre,
+            correo=usuario_pendiente.correo,
+            contrasena=usuario_pendiente.contrasena,
+            rol=usuario_pendiente.rol
+        )
+        
+        db.add(nuevo_usuario)
+        
+     
+        db.delete(usuario_pendiente)
+        
+        db.commit()
+        return nuevo_usuario
+    
+    @staticmethod
+    def rechazar_usuario(db: Session, id_usuario_pendiente: int):
+        usuario_pendiente = db.query(UsuariosPendientes).filter(
+            UsuariosPendientes.id == id_usuario_pendiente
+        ).first()
+        
+        if not usuario_pendiente:
+            return None 
+
+
+        db.delete(usuario_pendiente)
+        db.commit()
+        return True
+    
+    @staticmethod
+    def obtener_todos_los_usuarios(db: Session):
+        """Obtiene todos los usuarios de la base de datos (para gestión del Admin)."""
+        return db.query(Usuario).all()
+
+    @staticmethod
+    def eliminar_usuario(db: Session, user_id: int):
+        """Elimina un usuario de la tabla Usuario por su ID."""
+        usuario = db.query(Usuario).filter(Usuario.id == user_id).first()
+        
+        if not usuario:
+            return False 
+            
+        db.delete(usuario)
+        db.commit()
+        return True 
+    
+    @staticmethod
+    def buscar_usuario_por_nombre(db: Session, nombre_usuario: str):
+        """Busca usuarios por nombre para la interfaz de modificación."""
+        
+        usuarios = db.query(Usuario).filter(
+            Usuario.nombre_usuario.ilike(f"%{nombre_usuario}%")
+        ).all()
+        
+        return [
+            {"id": u.id, "nombre": u.nombre_usuario, "correo": u.correo, "rol": u.rol}
+            for u in usuarios
+        ]
+
+    @staticmethod
+    def modificar_usuario(db: Session, user_id: int, datos_actualizacion: dict):
+        """Actualiza los campos de un usuario específico."""
+        
+        campos_a_actualizar = {}
+        
+        if 'nombre' in datos_actualizacion:
+            campos_a_actualizar['nombre_usuario'] = datos_actualizacion['nombre']
+        if 'correo' in datos_actualizacion:
+            campos_a_actualizar['correo'] = datos_actualizacion['correo']
+            
+        if not campos_a_actualizar:
+            return 0 
+            
+        
+        stmt = (
+            update(Usuario)
+            .where(Usuario.id == user_id)
+            .values(**campos_a_actualizar)
+        )
+        
+        resultado = db.execute(stmt)
+        db.commit()
+        
+        return resultado.rowcount 
         
     

@@ -45,23 +45,82 @@ export const AuthService = {
         return await response.json();
     },
 
-    async aceptarUsuarioPendiente(idUsuarioPendiente) {
-        const response = await fetch(`${API_BASE_URL}/aceptar_usuario/${idUsuarioPendiente}`, {
-            method: 'POST',
+    async aceptarUsuario(idUsuarioPendiente) {
+    
+    const response = await fetch(`${API_BASE_URL}/aceptar_usuario/${idUsuarioPendiente}`, {
+        method: 'POST', 
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    });
+    
+    return await response.json();
+},
+
+async rechazarUsuario(idUsuarioPendiente) {
+  
+    const response = await fetch(`${API_BASE_URL}/rechazar_usuario/${idUsuarioPendiente}`, {
+        method: 'DELETE', 
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    });
+
+    if (!response.ok) {
+      
+        throw new Error('Fallo al rechazar usuario');
+    }
+
+    return await response.json();
+},
+
+async obtenerTodosLosUsuarios() {
+        const response = await fetch(`${API_BASE_URL}/usuarios_activos`);
+        if (!response.ok) {
+            throw new Error('Fallo al obtener todos los usuarios.');
+        }
+        return await response.json();
+    },
+
+    async eliminarUsuario(idUsuario) {
+        const response = await fetch(`${API_BASE_URL}/usuario/${idUsuario}`, {
+            method: 'DELETE', 
+        });
+        
+        if (!response.ok) {
+         
+            const error = await response.json();
+            throw new Error(error.error || 'Fallo al eliminar el usuario.');
+        }
+
+        return await response.json();
+    },
+
+    async buscarUsuario(nombre) {
+       
+        const response = await fetch(`${API_BASE_URL}/usuarios/buscar?nombre=${encodeURIComponent(nombre)}`);
+        if (!response.ok) {
+            throw new Error('Fallo al buscar usuarios.');
+        }
+        return await response.json();
+    },
+
+    async modificarUsuario(idUsuario, datos) {
+        const response = await fetch(`${API_BASE_URL}/usuario/${idUsuario}`, {
+            method: 'PUT', 
             headers: {
                 'Content-Type': 'application/json',
-            }
+            },
+            body: JSON.stringify(datos),
         });
+        
+        if (!response.ok) {
+            const error = await response.json();
+            throw new Error(error.error || 'Fallo al modificar el usuario.');
+        }
+
         return await response.json();
     },
-
-    async rechazarUsuario(idUsuario) {
-        const response = await fetch(`${API_BASE_URL}/admin/rechazar_usuario/${idUsuario}`, {
-            method: 'POST'
-        });
-        return await response.json();
-    },
-
 
 
     async obtenerUsuarioActual() {
@@ -74,3 +133,4 @@ export const AuthService = {
         return await response.json();
     }
 };
+
