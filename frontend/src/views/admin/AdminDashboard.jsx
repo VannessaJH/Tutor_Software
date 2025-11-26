@@ -22,6 +22,8 @@ export default function AdminDashboard() {
     correo: '',
   });
 
+  const [reporteResultados, setReporteResultados] = useState([]);
+
 
 
   useEffect(() => {
@@ -34,7 +36,13 @@ export default function AdminDashboard() {
     if (seccionUsuarioActiva === 'eliminar') {
         cargarTodosLosUsuarios(); 
     }
-  }, [seccionActiva]);
+
+    if (seccionUsuarioActiva === 'consultar') {
+      cargarReporteResultados();
+    }
+
+
+  }, [seccionActiva, seccionUsuarioActiva]);
 
   const cargarUsuariosPendientes = async () => {
     try {
@@ -193,6 +201,24 @@ const manejarBusquedaModificar = async () => {
     }
   };
 
+  const cargarReporteResultados = async () => {
+    try {
+      const data = await AuthService.obtenerReporteResultados();
+      setReporteResultados(data);
+      console.log("Reporte de resultados cargado:", data);
+    } catch (error) {
+      console.error("Error cargando el reporte de resultados:", error);
+    }};
+
+  const manejarCerrarSesion = () => {
+    
+      AuthService.cerrarSesion();
+      
+      window.location.href = '/login'; 
+  };
+
+  
+
   return (
     <div className="admin-dashboard">
       <header className="header-etitc">
@@ -219,7 +245,13 @@ const manejarBusquedaModificar = async () => {
           </div>
 
 
-      <button onClick={() => setSeccionActiva("inicio")}>🏠 Inicio</button>
+      <button 
+        onClick={manejarCerrarSesion} 
+       
+        style={{ backgroundColor: '#B71C1C', color: 'white' }} 
+    >
+        🚪 Cerrar Sesión
+      </button>
       <button onClick={() => setSeccionActiva("semilleros")}>📚 Semilleros</button>
       <button onClick={() => setSeccionActiva("convocatorias")}>🧩 Convocatorias</button>
       <button onClick={() => setSeccionActiva("usuarios")}>👥 Usuarios</button> 
@@ -389,6 +421,42 @@ const manejarBusquedaModificar = async () => {
                 )}
             </section>
         )}
+
+        {seccionActiva === "gestion-usuarios" && seccionUsuarioActiva === "consultar" && (
+            <section>
+                <h2>📋 Reporte de Resultados de Evaluación</h2>
+                <p>Lista de usuarios y sus resultados de la evaluación única.</p>
+                
+                {reporteResultados.length > 0 ? (
+                    <div className="reporte-lista">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Nombre de Usuario</th>
+                                    <th>Puntaje</th>
+                                    <th>Fecha</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {reporteResultados.map(r => (
+                                    <tr key={r.id_usuario}>
+                                        <td>{r.id_usuario}</td>
+                                        <td>{r.nombre_usuario}</td>
+                                        <td>{r.puntaje} / 100</td>
+                                        <td>{new Date(r.fecha).toLocaleDateString()}</td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
+                ) : (
+                    <p>Cargando resultados o no hay evaluaciones registradas.</p>
+                )}
+            </section>
+        )}
+
+
       </main>
 
       <footer className="footer-etitc">

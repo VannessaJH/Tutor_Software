@@ -1,5 +1,7 @@
 const API_BASE_URL = 'http://localhost:8001/api/auth';
 
+
+
 export const AuthService = {
     async login(credenciales) {
         const response = await fetch(`${API_BASE_URL}/login`, {
@@ -131,6 +133,45 @@ async obtenerTodosLosUsuarios() {
             }
         });
         return await response.json();
+    }, 
+
+
+    obtenerReporteResultados: async () => {
+        const url = `${API_BASE_URL}/resultados/reporte`;
+        console.log("Llamando a la API para obtener el reporte de resultados:", url);
+        
+        try {
+            const token = localStorage.getItem('token'); 
+            
+            const response = await fetch(url, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+        
+                    'Authorization': `Bearer ${token}`, 
+                },
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.detail || `Error al cargar los resultados: ${response.status}`);
+            }
+
+            const data = await response.json();
+            return data;
+        } catch (error) {
+            console.error("Error en obtenerReporteResultados:", error);
+            throw error; 
+        }
+    },
+
+    cerrarSesion: () => {
+
+        localStorage.removeItem('token');
+   
+        localStorage.removeItem('userRole'); 
+       
+        return true; 
     }
 };
 

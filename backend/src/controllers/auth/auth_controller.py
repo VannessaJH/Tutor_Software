@@ -1,8 +1,11 @@
 from sqlalchemy.orm import Session
 from models.user.usuario import Usuario
+from sqlalchemy import func, desc, literal_column
+from models.evaluation.Evaluacion_Usuario import EvaluacionUsuario
 from sqlalchemy import update
 from models.user.usuarios_pendientes import UsuariosPendientes
 from passlib.context import CryptContext
+from fastapi import HTTPException
 
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
@@ -208,5 +211,60 @@ class AuthController:
         db.commit()
         
         return resultado.rowcount 
+    
+    @staticmethod
+    def obtener_reporte_resultados(db: Session):
+        """
+        Devuelve el puntaje y la fecha del registro de evaluación MÁS RECIENTE para cada usuario.
+        """
+        try:
+        
+            subconsulta_ranking = (
+                db.query(
+                    EvaluacionUsuario.id_usuario,
+                    EvaluacionUsuario.id_evaluacion,
+                    EvaluacionUsuario.fecha,
+                    EvaluacionUsuario.puntaje,
+                    func.row_number()
+                    .over(
+                        partition_by=EvaluacionUsuario.id_usuario,
+                        order_by=desc(EvaluacionUsuario.fecha) 
+                    )
+                    .label('rn') 
+                )
+                .subquery()
+            )
+
+            
+            reporte = (
+                db.query(
+                    Usuario.id.label("id_usuario"),
+                    Usuario.nombre.label("nombre_usuario"), 
+                    subconsulta_ranking.c.puntaje.label("puntaje_reciente"), 
+                    subconsulta_ranking.c.fecha.label("fecha_evaluacion")    
+                )
+                .join(subconsulta_ranking, Usuario.id == subconsulta_ranking.c.id_usuario)
+                .filter(subconsulta_ranking.c.rn == 1) 
+                .order_by(desc(subconsulta_ranking.c.fecha))
+                .all()
+            )
+            
+       
+            return [
+                {
+                    "id_usuario": r.id_usuario,
+                    "nombre_usuario": r.nombre_usuario,
+                    "puntaje": r.puntaje, 
+                    "fecha": r.fecha.isoformat() 
+                } 
+                for r in reporte
+            ]
+
+        except Exception as e:
+            print(f"Error al generar el reporte de resultados (último registro): {e}")
+            raise HTTPException(
+                status_code=500, 
+                detail="Error interno del servidor al obtener el reporte de resultados."
+            )
         
     
