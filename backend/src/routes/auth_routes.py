@@ -111,3 +111,9 @@ async def modificar_usuario(
         return {"error": f"Usuario con ID {user_id} no encontrado o no se pudo actualizar"}, 404
         
     return {"mensaje": f"Usuario con ID {user_id} modificado correctamente"}
+
+@router.get("/resultados/reporte")
+async def obtener_reporte_resultados(db: Session = Depends(get_db)):
+    """Obtener el reporte de resultados de evaluación (puntaje más alto) para todos los usuarios."""
+    print("ENDPOINT /resultados/reporte: Solicitud de reporte de resultados de evaluación.")
+    return AuthController.obtener_reporte_resultados(db)
