@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 22-11-2025 a las 23:03:15
+-- Tiempo de generación: 26-11-2025 a las 15:35:07
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -24,6 +24,32 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `evaluacion_usuario`
+--
+
+CREATE TABLE `evaluacion_usuario` (
+  `id_evaluacion` int(11) NOT NULL,
+  `id_usuario` int(11) NOT NULL,
+  `fecha` date DEFAULT NULL,
+  `puntaje` float DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `preguntas`
+--
+
+CREATE TABLE `preguntas` (
+  `id_pregunta` int(11) NOT NULL,
+  `enunciado` text DEFAULT NULL,
+  `opciones` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid(`opciones`)),
+  `respuesta_correcta` char(1) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `usuarios`
 --
 
@@ -40,9 +66,10 @@ CREATE TABLE `usuarios` (
 --
 
 INSERT INTO `usuarios` (`id`, `nombre_usuario`, `correo`, `contrasena`, `rol`) VALUES
-(0, 'profesor_test', 'plqs@gmail.com', '$2b$12$DnQst48964gcWj8PVjSideJq7bXGjX57adTDwhnpdWfwDEwgLXGHy', NULL),
-(0, 'Admin', 'admin@sistema.edu.co', '$2b$12$dtbtO59rTe6kkSVDrvUcauVD..F1P4sMylZjgIzXEVzrlx4e5xvny', 'Administrador'),
-(0, 'Majo Solís', 'msol@gmail.com', '$2b$12$mvlxTbfaNPdwmFwPyntdbO5Ww1VOzMxHZ6moame3IlA3YEgpRmoPu', NULL);
+(1, 'Admin', 'admin@sistema.edu.co', '$2b$12$.iy1zb33p/ZKvZgAF3aNveMz5fG2O4py7924j0EgnvvUPvuPoeVWy', 'Administrador'),
+(2, 'Majo Solis ', 'msolis@gmail.com', '$2b$12$XDj5y0UE23LE56Zg8aMX4OTyQ0HE6VgPs3d7irpSSyZoNgpXWcNEa', 'Usuario'),
+(5, 'Gina Parra', 'gparraa@gmail.com', '$2b$12$omVByM3srQJsMXGnDFsQ1O5fjJLuNhFAUqmi3p0W.VbqK3nB2m0Tm', 'Usuario'),
+(6, 'Danilo Ruiz', 'druizl@gmail.com', '$2b$12$i0lIav.Aig4ACB8dvXzL/uFPOObbFrHytIfLOTs7NUO5uYhmC8frG', 'Usuario');
 
 -- --------------------------------------------------------
 
@@ -63,11 +90,31 @@ CREATE TABLE `usuarios_pendientes` (
 --
 
 INSERT INTO `usuarios_pendientes` (`id`, `nombre`, `correo`, `contrasena`, `estado`) VALUES
-(1, 'Majo Solís', 'msol@gmail.com', '$2b$12$Ynovmj33iyA20C25CG.WYuLobpgKeTeBz./QJl5CjMxHsS.M10xwi', 'Pendiente');
+(6, 'Gina Parra', 'gparraa@gmail.com', '$2b$12$m78wt6f1CKaA6FOtTIiZDuxmRL1JHN/UHRhM02Ypgl8qjEYNHXQkO', 'Pendiente'),
+(7, 'Danilo Ruiz', 'druizl@gmail.com', '$2b$12$M7RbvrrHYuHahzh8nMXU5OHLlk2tNmba9gBwynibqKmJWHpegCx9q', 'Pendiente');
 
 --
 -- Índices para tablas volcadas
 --
+
+--
+-- Indices de la tabla `evaluacion_usuario`
+--
+ALTER TABLE `evaluacion_usuario`
+  ADD PRIMARY KEY (`id_evaluacion`),
+  ADD KEY `id_usuario` (`id_usuario`);
+
+--
+-- Indices de la tabla `preguntas`
+--
+ALTER TABLE `preguntas`
+  ADD PRIMARY KEY (`id_pregunta`);
+
+--
+-- Indices de la tabla `usuarios`
+--
+ALTER TABLE `usuarios`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indices de la tabla `usuarios_pendientes`
@@ -80,10 +127,38 @@ ALTER TABLE `usuarios_pendientes`
 --
 
 --
+-- AUTO_INCREMENT de la tabla `evaluacion_usuario`
+--
+ALTER TABLE `evaluacion_usuario`
+  MODIFY `id_evaluacion` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `preguntas`
+--
+ALTER TABLE `preguntas`
+  MODIFY `id_pregunta` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `usuarios`
+--
+ALTER TABLE `usuarios`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
 -- AUTO_INCREMENT de la tabla `usuarios_pendientes`
 --
 ALTER TABLE `usuarios_pendientes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- Restricciones para tablas volcadas
+--
+
+--
+-- Filtros para la tabla `evaluacion_usuario`
+--
+ALTER TABLE `evaluacion_usuario`
+  ADD CONSTRAINT `evaluacion_usuario_ibfk_1` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
