@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session
 from typing import List, Optional
-
+# Importar el modelo Convocatoria que acabamos de crear
 from models.academic.convocatoria import Convocatoria 
 
 def get_all_convocatorias(db: Session, only_active: Optional[bool] = None) -> List[Convocatoria]:
@@ -16,7 +16,7 @@ def get_all_convocatorias(db: Session, only_active: Optional[bool] = None) -> Li
     if only_active is True:
         query = query.filter(Convocatoria.activa == True)
     
- 
+    # Ordenar por fecha de fin de forma ascendente (las que cierran pronto primero)
     return query.order_by(Convocatoria.fecha_fin.asc()).all()
 
 def get_convocatoria_by_id(db: Session, convocatoria_id: int) -> Optional[Convocatoria]:

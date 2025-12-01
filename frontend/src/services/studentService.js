@@ -2,7 +2,9 @@ s// frontend/src/services/studentService.js
 
 const API_BASE_URL = '/api/student'; 
 
-
+// ------------------------------------------------------------------
+// 1. OBTENER CONTENIDO (incluye contenido gestionable y 'puede_evaluar')
+// ------------------------------------------------------------------
 export const fetchStudentContent = async (token) => {
     const response = await fetch(`${API_BASE_URL}/content`, {
         method: 'GET',
@@ -19,7 +21,9 @@ export const fetchStudentContent = async (token) => {
     return response.json();
 };
 
-
+// ------------------------------------------------------------------
+// 2. REGISTRAR VISTA DE CONTENIDO
+// ------------------------------------------------------------------
 export const registerContentView = async (token, contentSlug, contentId) => {
     const response = await fetch(`${API_BASE_URL}/content/view`, {
         method: 'POST',
@@ -42,7 +46,9 @@ export const registerContentView = async (token, contentSlug, contentId) => {
     return response.json();
 };
 
-
+// ------------------------------------------------------------------
+// 3. OBTENER PREGUNTAS DE EVALUACIÓN
+// ------------------------------------------------------------------
 export const fetchEvaluationQuestions = async (token) => {
     const response = await fetch(`${API_BASE_URL}/evaluation/questions`, {
         method: 'GET',
@@ -59,7 +65,9 @@ export const fetchEvaluationQuestions = async (token) => {
     return data.questions;
 };
 
-
+// ------------------------------------------------------------------
+// 4. ENVIAR EVALUACIÓN
+// ------------------------------------------------------------------
 export const submitEvaluationAnswers = async (token, respuestas) => {
     const response = await fetch(`${API_BASE_URL}/evaluation/submit`, {
         method: 'POST',

@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy.orm import Session
 from typing import List, Optional
 
-
+# Importar el modelo, controlador y la función para obtener la sesión DB
 from models.academic.convocatoria import Convocatoria
 from controllers.academic.convocatorias_controller import get_all_convocatorias, get_convocatoria_by_id
 from config.database import get_db 

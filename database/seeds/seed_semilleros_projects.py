@@ -10,7 +10,7 @@ sys.path.append(os.path.join(root_dir, 'backend', 'src'))
 
 try:
     from database import Base, engine, SessionLocal
-    from backend.src.models.academic.semilleros import Semillero 
+    from models.academic.semillero import Semillero 
 except ImportError as e:
     print(f"ADVERTENCIA: No se pudo importar el modelo real Semillero o conf.database. Usando un mock temporal. Error: {e}")
     
@@ -29,7 +29,7 @@ except ImportError as e:
         activo = Column(Boolean)
 
     engine = create_engine('sqlite:///./mock_semillero.db')
-    SessionLocal = lambda: Session(bind=engine)
+    SessionLocal = lambda: Session(bind=engine) # Definir SessionLocal para el mock
     
 SEEDS_PROJECTS = [
     {'año': 2025, 'nombre': 'Mecatrónica aplicada a la industria', 'profesor': 'Juan José Bernal Segura', 'proyecto': 'Diseño y construcción de un robot scara con visión artificial para detección y selección de objetos', 'descripcion': 'Proyecto de mecatrónica', 'contacto': 'juan.bernal@etitc.edu.co'},
@@ -108,11 +108,11 @@ def seed_semilleros_data():
             print(f"Agregado: {data['nombre']} ({data['año']}) - Activo: {new_semillero.activo}")
 
         db.commit()
-        print(" Siembra de datos de Semilleros completada con éxito.")
+        print("✅ Siembra de datos de Semilleros completada con éxito.")
 
     except Exception as e:
         db.rollback()
-        print(f" Error durante la siembra de datos de Semilleros: {e}")
+        print(f"❌ Error durante la siembra de datos de Semilleros: {e}")
         import traceback
         traceback.print_exc()
     finally:

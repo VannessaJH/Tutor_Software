@@ -2,12 +2,12 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 # Importar el router de autenticación (ya existente)
 from routes.auth_routes import router as auth_router 
-#  Importar el nuevo router del estudiante (desde routes/routes/student_routes.py)
-from routes.student_routes import student_bp as student_router 
+# 💡 Importar el nuevo router del estudiante (desde routes/routes/student_routes.py)
+from routes.routes.student_routes import router as student_router 
 import uvicorn
 
-# Importar la nueva ruta de semilleros
-from routes.semilleros import router as semilleros_router 
+# 💡 Importar la nueva ruta de semilleros
+from routes.academic.semilleros import router as semilleros_router 
 
 print("INICIANDO SCRIPT MAIN.PY")
 

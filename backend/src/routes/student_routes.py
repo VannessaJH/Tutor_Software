@@ -1,7 +1,7 @@
 from flask import Blueprint, jsonify, request
 from services.student_service import StudentService
-
-from controllers.academic.student_controller import (
+# 💡 Importar las funciones del controlador de contenido académico
+from src.controllers.academic.student_controller import (
     get_student_content_controller, 
     register_content_view_controller,
     get_evaluation_questions_controller,

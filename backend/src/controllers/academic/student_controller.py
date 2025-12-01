@@ -13,7 +13,7 @@ def get_student_content_controller(request):
     GET /api/student/content
     Obtiene semilleros, convocatorias y el contenido HTML gestionable.
     """
-    #  NOTA: En un entorno real, el user_id se obtendría del token JWT
+    # 💡 NOTA: En un entorno real, el user_id se obtendría del token JWT
     # user_id = get_user_id(request)
     user_id = 1 # ID de usuario simulado 
     

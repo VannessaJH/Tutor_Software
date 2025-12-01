@@ -1,3 +1,4 @@
+// frontend/src/views/student/EvaluationView.jsx
 
 import React, { useState, useEffect } from 'react';
 import { fetchEvaluationQuestions, submitEvaluationAnswers } from '../../services/studentService';
@@ -11,7 +12,7 @@ const EvaluationView = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     
-    //  Obtener el token real aquí
+    // ⚠️ Obtener el token real aquí
     const token = "TOKEN_DE_EJEMPLO"; 
 
     useEffect(() => {
@@ -66,9 +67,9 @@ const EvaluationView = () => {
     if (loading) return <div className="text-center mt-5">Cargando Evaluación...</div>;
     if (error) return <div className="alert alert-danger mt-5">Error: {error}</div>;
 
-
+    // Mostrar Resultados si ya se envió la evaluación
     if (result) {
-        const isApproved = result.puntaje >= 70; 
+        const isApproved = result.puntaje >= 70; // Asume un umbral de aprobación del 70%
         return (
             <div className="container mt-5">
                 <h2 className="text-primary">✨ Resultados de la Evaluación</h2>

@@ -3,9 +3,8 @@ from sqlalchemy.orm import Session
 from typing import List, Optional
 
 
-#from models.academic.semilleros import Semillero
+from models.academic.semilleros import Semillero
 from controllers.academic.semilleros_controller import get_all_semilleros, get_semillero_by_id
-from schemas.semillero_schema import SemilleroResponse
 
 from config.database import get_db 
 
@@ -14,7 +13,7 @@ router = APIRouter(
     tags=["Semilleros"],
 )
 
-@router.get("/", response_model=List[SemilleroResponse])
+@router.get("/", response_model=List[Semillero])
 def read_semilleros(
     db: Session = Depends(get_db),
     year: Optional[int] = Query(None, description="Año para filtrar los semilleros (ej: 2025)"),
@@ -27,7 +26,7 @@ def read_semilleros(
     semilleros = get_all_semilleros(db, year=year)
     return semilleros
 
-@router.get("/{semillero_id}", response_model=SemilleroResponse)
+@router.get("/{semillero_id}", response_model=Semillero)
 def read_semillero(
     semillero_id: int, 
     db: Session = Depends(get_db)

@@ -2,27 +2,20 @@ import os
 import sys
 from sqlalchemy.orm import Session
 from sqlalchemy import create_engine, Column, Integer, String, Text, Boolean 
-from sqlalchemy.ext.declarative import declarative_base
 
 
 current_dir = os.path.dirname(__file__)
-root_dir = os.path.abspath(os.path.join(current_dir, '..', '..'))
-config_dir = os.path.join(root_dir, 'backend', 'src', 'config') 
-if config_dir not in sys.path:
-    sys.path.append(os.path.join(root_dir, 'backend', 'src'))
-    
-src_dir = os.path.join(root_dir, 'backend', 'src')
-if src_dir not in sys.path:
-    sys.path.append(src_dir)
+root_dir = os.path.abspath(os.path.join(current_dir, '..', '..')) 
+sys.path.append(os.path.join(root_dir, 'backend', 'src'))
 
 
 try:
-    from backend.src.config.database import Base, engine, SessionLocal
-    from backend.src.models.academic.convocatoria import Convocatoria 
-    print("✅ Importación de modelos y configuración de DB REAL exitosa.")
+    from database import Base, engine, SessionLocal
+    from models.academic.convocatoria import Convocatoria 
 except ImportError as e:
     print(f"ADVERTENCIA: No se pudo importar el modelo real Convocatoria o conf.database. Usando un mock temporal. Error: {e}")
-
+    
+    from sqlalchemy.ext.declarative import declarative_base
     Base = declarative_base()
     
     class Convocatoria(Base): 
@@ -143,11 +136,11 @@ def seed_convocatorias_data():
             print(f"Agregado: {data['titulo']} | Bloque: {data['categoria_bloque']} | Activo: {new_convocatoria.is_active}")
 
         db.commit()
-        print(" Siembra de datos de Convocatorias completada con éxito.")
+        print("✅ Siembra de datos de Convocatorias completada con éxito.")
 
     except Exception as e:
         db.rollback()
-        print(f" Error durante la siembra de datos de Convocatorias: {e}")
+        print(f"❌ Error durante la siembra de datos de Convocatorias: {e}")
         import traceback
         traceback.print_exc()
     finally:

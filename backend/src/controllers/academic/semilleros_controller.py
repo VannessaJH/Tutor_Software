@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session
 from typing import List, Optional
-from models.academic.semilleros import Semillero
+from models.academic.semillero import Semillero
 
 def get_all_semilleros(db: Session, year: Optional[int] = None) -> List[Semillero]:
     """
@@ -16,7 +16,7 @@ def get_all_semilleros(db: Session, year: Optional[int] = None) -> List[Semiller
     if year is not None:
         query = query.filter(Semillero.año == year)
     
-
+    # Ordenar por año descendente y luego por nombre alfabéticamente
     return query.order_by(Semillero.año.desc(), Semillero.nombre.asc()).all()
 
 def get_semillero_by_id(db: Session, semillero_id: int) -> Optional[Semillero]:
