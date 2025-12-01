@@ -38,3 +38,24 @@ def read_convocatoria(
     if convocatoria is None:
         raise HTTPException(status_code=404, detail="Convocatoria no encontrada")
     return convocatoria
+
+# backend/routes/convocatorias.py (añade estas rutas)
+@router.put("/{convocatoria_id}")
+def update_convocatoria(
+    convocatoria_id: int,
+    convocatoria_data: dict,  # Necesitas crear el schema
+    db: Session = Depends(get_db)
+):
+    convocatoria = db.query(Convocatoria).filter(Convocatoria.id == convocatoria_id).first()
+    
+    if not convocatoria:
+        raise HTTPException(status_code=404, detail="Convocatoria no encontrada")
+    
+    # Actualizar campos
+    for key, value in convocatoria_data.items():
+        setattr(convocatoria, key, value)
+    
+    db.commit()
+    db.refresh(convocatoria)
+    
+    return {"message": "Convocatoria actualizada", "data": convocatoria}

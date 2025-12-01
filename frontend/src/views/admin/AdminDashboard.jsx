@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { AuthService } from '../../services/apiService.js';
 import "./AdminDashboard.css";
 "import '../../../../backend/src/models/user/usuarios_pendientes';"
+import ApiService from '../../services/apiService.js';
 
 export default function AdminDashboard() {
 
@@ -13,7 +14,6 @@ export default function AdminDashboard() {
 
   const [terminoBusqueda, setTerminoBusqueda] = useState('');
   const [usuarioEncontrado, setUsuarioEncontrado] = useState(null);
-
   const [terminoBusquedaModificar, setTerminoBusquedaModificar] = useState('');
   const [resultadosBusqueda, setResultadosBusqueda] = useState([]);
   const [usuarioSeleccionado, setUsuarioSeleccionado] = useState(null);
@@ -32,33 +32,51 @@ export default function AdminDashboard() {
   // -------- SEMILLEROS --------
   const [listaSemilleros, setListaSemilleros] = useState([]);
   const [busquedaSemillero, setBusquedaSemillero] = useState("");
+  const [resultadosBusquedaSemilleros, setResultadosBusquedaSemilleros] = useState([]);
   const [semilleroSeleccionado, setSemilleroSeleccionado] = useState(null);
+  const [mostrarFormularioSemillero, setMostrarFormularioSemillero] = useState(false);
   const [formSemillero, setFormSemillero] = useState({
-    nombre: "",
-    descripcion: ""
+    nombre: '',
+    profesor: '',
+    proyecto: '',
+    año: '',
+    descripcion: '',
+    contacto: '',
+    activo: true
   });
 
   // -------- CONVOCATORIAS --------
   const [listaConvocatorias, setListaConvocatorias] = useState([]);
   const [busquedaConvocatoria, setBusquedaConvocatoria] = useState("");
+  const [resultadosBusquedaConvocatorias, setResultadosBusquedaConvocatorias] = useState([]);
   const [convocatoriaSeleccionada, setConvocatoriaSeleccionada] = useState(null);
+  const [mostrarFormularioConvocatoria, setMostrarFormularioConvocatoria] = useState(false);
   const [formConvocatoria, setFormConvocatoria] = useState({
-    nombre: "",
-    descripcion: ""
+    titulo: '',
+    tipo: '',
+    año: '',
+    numero: '',
+    archivo_url: '',
+    descripcion: '',
+    fecha_limite: '',
+    activa: true
   });
 
   // -------- REDES --------
   const [listaRedes, setListaRedes] = useState([]);
   const [busquedaRed, setBusquedaRed] = useState("");
+  const [resultadosBusquedaRedes, setResultadosBusquedaRedes] = useState([]);
   const [redSeleccionada, setRedSeleccionada] = useState(null);
+  const [mostrarFormularioRed, setMostrarFormularioRed] = useState(false);
   const [formRed, setFormRed] = useState({
-    nombre: "",
-    descripcion: ""
+    nombre: '',
+    descripcion: '',
+    tipo: '',
+    enlace: '',
+    activa: true
   });
 
-
-
-
+  
   useEffect(() => {
     console.log(' Sección activa cambiada:', seccionActiva);
     if (seccionActiva === "usuarios") {
@@ -272,167 +290,207 @@ export default function AdminDashboard() {
   };
 
   // Cargar lista de semilleros (llamar API si existe)
-  const cargarSemilleros = async () => {
+ const buscarSemilleros = async () => {
+  try {
+    const semilleros = await ApiService.obtenerSemilleros();
+    console.log('Semilleros obtenidos:', semilleros);
+    setListaSemilleros(semilleros);
+  } catch (error) {
+    console.error('Error:', error.message);
+  }
+};
+
+const modificarSemillero = async (id, nuevosDatos) => {
+  try {
+    const resultado = await ApiService.modificarSemillero(id, nuevosDatos);
+    console.log('Semillero modificado:', resultado);
+    alert('¡Semillero actualizado correctamente!');
+  } catch (error) {
+    console.error('Error al modificar:', error.message);
+    alert('Error: ' + error.message);
+  }
+};
+
+  const buscarElemento = async (busqueda) => {
+  if (!busqueda.trim()) {
+    alert('Por favor, escribe algo para buscar');
+    return;
+  }
+
+  try {
+    let resultados = [];
+    
+    switch (moduloActivo) {
+      case 'semilleros':
+        resultados = await ApiService.buscarSemilleroPorNombre(busqueda);
+        break;
+      case 'convocatorias':
+        resultados = await ApiService.buscarConvocatoriaPorNombre(busqueda);
+        break;
+      case 'redes':
+        // Implementa búsqueda para redes
+        break;
+    }
+
+    setResultadosBusqueda(resultados);
+    setElementoSeleccionado(null);
+    setMostrarFormulario(false);
+    
+  } catch (error) {
+    console.error('Error buscando:', error);
+    alert('Error al buscar: ' + error.message);
+  }
+};
+
+const seleccionarElemento = (elemento) => {
+  setElementoSeleccionado(elemento);
+  setFormData({
+    nombre: elemento.nombre || elemento.titulo,
+    descripcion: elemento.descripcion,
+    // ... otros campos
+  });
+  setMostrarFormulario(true);
+};
+
+const guardarCambios = async () => {
+  if (!elementoSeleccionado) return;
+
+  try {
+    switch (moduloActivo) {
+      case 'semilleros':
+        await ApiService.modificarSemillero(elementoSeleccionado.id, formData);
+        break;
+      case 'convocatorias':
+        await ApiService.modificarConvocatoria(elementoSeleccionado.id, formData);
+        break;
+      case 'redes':
+        await ApiService.modificarRed(elementoSeleccionado.id, formData);
+        break;
+    }
+
+    alert('Cambios guardados exitosamente!');
+    // Limpiar estados
+    setElementoSeleccionado(null);
+    setMostrarFormulario(false);
+    setResultadosBusqueda([]);
+    
+  } catch (error) {
+    console.error('Error guardando cambios:', error);
+    alert('Error al guardar: ' + error.message);
+  }
+};
+
+  // ------------ Cargar convocatorias ------------
+  const cargarConvocatorias = async () => {
     try {
-      const data = await AuthService.obtenerSemilleros();
-      setListaSemilleros(data);
+      const data = await AuthService.obtenerConvocatorias();
+      setListaConvocatorias(data);
     } catch (error) {
-      console.error("Error cargando semilleros:", error);
+      console.error("Error cargando convocatorias:", error);
     }
   };
 
-  // Buscar semillero
-  const buscarSemillero = () => {
-    if (!busquedaSemillero.trim()) {
+  // ------------ Buscar convocatoria ------------
+  const buscarConvocatoria = () => {
+    if (!busquedaConvocatoria.trim()) {
       alert("Escribe un nombre para buscar.");
       return;
     }
 
-    const encontrado = listaSemilleros.find(s =>
-      s.nombre.toLowerCase().includes(busquedaSemillero.toLowerCase())
+    const encontrada = listaConvocatorias.find(c =>
+      c.nombre.toLowerCase().includes(busquedaConvocatoria.toLowerCase())
     );
 
-    if (!encontrado) {
-      alert("No se encontró ningún semillero.");
-      setSemilleroSeleccionado(null);
+    if (!encontrada) {
+      alert("No se encontró ninguna convocatoria.");
+      setConvocatoriaSeleccionada(null);
       return;
     }
 
-    setSemilleroSeleccionado(encontrado);
-    setFormSemillero({
-      nombre: encontrado.nombre,
-      descripcion: encontrado.descripcion
+    setConvocatoriaSeleccionada(encontrada);
+    setFormConvocatoria({
+      nombre: encontrada.nombre,
+      descripcion: encontrada.descripcion
     });
-    
   };
 
-  // Guardar cambios
-  const guardarCambiosSemillero = async () => {
-
-    if (!formSemillero.nombre || !formSemillero.descripcion) {
+  // ------------ Guardar cambios ------------
+  const guardarCambiosConvocatoria = async () => {
+    if (!formConvocatoria.nombre || !formConvocatoria.descripcion) {
       alert("Completa todos los campos");
       return;
     }
 
     try {
-      await AuthService.modificarSemillero(semilleroSeleccionado.id, formSemillero);
-      alert("Semillero actualizado");
-      cargarSemilleros();
-      setSemilleroSeleccionado(null);
+      await AuthService.modificarConvocatoria(
+        convocatoriaSeleccionada.id,
+        formConvocatoria
+      );
+
+      alert("Convocatoria actualizada");
+      cargarConvocatorias();
+      setConvocatoriaSeleccionada(null);
+
     } catch (error) {
       console.error("Error al actualizar:", error);
     }
   };
 
-  // ------------ Cargar convocatorias ------------
-const cargarConvocatorias = async () => {
-  try {
-    const data = await AuthService.obtenerConvocatorias();
-    setListaConvocatorias(data);
-  } catch (error) {
-    console.error("Error cargando convocatorias:", error);
-  }
-};
 
-// ------------ Buscar convocatoria ------------
-const buscarConvocatoria = () => {
-  if (!busquedaConvocatoria.trim()) {
-    alert("Escribe un nombre para buscar.");
-    return;
-  }
+  // ------------ Cargar redes ------------
+  const cargarRedes = async () => {
+    try {
+      const data = await ApiService.obtenerRedes();
+      setListaRedes(data);
+    } catch (error) {
+      console.error("Error cargando redes:", error);
+    }
+  };
 
-  const encontrada = listaConvocatorias.find(c =>
-    c.nombre.toLowerCase().includes(busquedaConvocatoria.toLowerCase())
-  );
+  const buscarRed = async () => {
+    if (!busquedaRed.trim()) {
+      alert("Escribe un nombre para buscar.");
+      return;
+    }
 
-  if (!encontrada) {
-    alert("No se encontró ninguna convocatoria.");
-    setConvocatoriaSeleccionada(null);
-    return;
-  }
+    try {
+      const resultados = await ApiService.buscarRedPorNombre(busquedaRed);
+      setResultadosBusquedaRedes(resultados);
+      setRedSeleccionada(null);
+      setMostrarFormularioRed(false);
+    } catch (error) {
+      console.error("Error buscando red:", error);
+      alert("Error al buscar red");
+    }
+  };
 
-  setConvocatoriaSeleccionada(encontrada);
-  setFormConvocatoria({
-    nombre: encontrada.nombre,
-    descripcion: encontrada.descripcion
-  });
-};
+  const seleccionarRed = (red) => {
+    setRedSeleccionada(red);
+    setFormRed({
+      nombre: red.nombre || '',
+      descripcion: red.descripcion || '',
+      tipo: red.tipo || '',
+      enlace: red.enlace || '',
+      activa: red.activa || true
+    });
+    setMostrarFormularioRed(true);
+  };
 
-// ------------ Guardar cambios ------------
-const guardarCambiosConvocatoria = async () => {
-  if (!formConvocatoria.nombre || !formConvocatoria.descripcion) {
-    alert("Completa todos los campos");
-    return;
-  }
+  const guardarCambiosRed = async () => {
+    if (!redSeleccionada) return;
 
-  try {
-    await AuthService.modificarConvocatoria(
-      convocatoriaSeleccionada.id,
-      formConvocatoria
-    );
-
-    alert("Convocatoria actualizada");
-    cargarConvocatorias();
-    setConvocatoriaSeleccionada(null);
-
-  } catch (error) {
-    console.error("Error al actualizar:", error);
-  }
-};
-
-
-// ------------ Cargar redes ------------
-const cargarRedes = async () => {
-  try {
-    const data = await AuthService.obtenerRedes();
-    setListaRedes(data);
-  } catch (error) {
-    console.error("Error cargando redes:", error);
-  }
-};
-
-// ------------ Buscar red ------------
-const buscarRed = () => {
-  if (!busquedaRed.trim()) {
-    alert("Escribe un nombre para buscar.");
-    return;
-  }
-
-  const encontrada = listaRedes.find(r =>
-    r.nombre.toLowerCase().includes(busquedaRed.toLowerCase())
-  );
-
-  if (!encontrada) {
-    alert("No se encontró ninguna red.");
-    setRedSeleccionada(null);
-    return;
-  }
-
-  setRedSeleccionada(encontrada);
-  setFormRed({
-    nombre: encontrada.nombre,
-    descripcion: encontrada.descripcion
-  });
-};
-
-// ------------ Guardar cambios ------------
-const guardarCambiosRed = async () => {
-  if (!formRed.nombre || !formRed.descripcion) {
-    alert("Completa todos los campos");
-    return;
-  }
-
-  try {
-    await AuthService.modificarRed(redSeleccionada.id, formRed);
-    alert("Red actualizada");
-
-    cargarRedes();
-    setRedSeleccionada(null);
-
-  } catch (error) {
-    console.error("Error al actualizar:", error);
-  }
-};
+    try {
+      await ApiService.modificarRed(redSeleccionada.id, formRed);
+      alert("Red actualizada correctamente");
+      cargarRedes();
+      setRedSeleccionada(null);
+      setMostrarFormularioRed(false);
+      setResultadosBusquedaRedes([]);
+    } catch (error) {
+      console.error("Error al actualizar red:", error);
+      alert("Error al actualizar red: " + error.message);
+    }
+  };
 
 
 
@@ -736,6 +794,270 @@ const guardarCambiosRed = async () => {
                 ) : (
                   <p>Este usuario no tiene evaluaciones registradas.</p>
                 )}
+              </div>
+            )}
+          </section>
+        )}
+
+         {/* SECCIÓN DE SEMILLEROS */}
+        {seccionActiva === 'semilleros' && (
+          <section>
+            <h2>📚 Gestión de Semilleros</h2>
+            
+            <div className="search-box mb-3">
+              <input
+                type="text"
+                placeholder="Buscar semillero por nombre..."
+                value={busquedaSemillero}
+                onChange={(e) => setBusquedaSemillero(e.target.value)}
+              />
+              <button onClick={buscarSemillero}>🔍 Buscar</button>
+            </div>
+
+            {resultadosBusquedaSemilleros.length > 0 && !mostrarFormularioSemillero && (
+              <div className="resultados-lista">
+                <h4>Resultados encontrados:</h4>
+                {resultadosBusquedaSemilleros.map((semillero) => (
+                  <div key={semillero.id} className="item-resultado">
+                    <span>{semillero.nombre} - {semillero.profesor} ({semillero.año})</span>
+                    <button onClick={() => seleccionarSemillero(semillero)}>
+                      ✏️ Modificar
+                    </button>
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {mostrarFormularioSemillero && semilleroSeleccionado && (
+              <div className="formulario-modificacion">
+                <h4>Modificando: {semilleroSeleccionado.nombre}</h4>
+                
+                <div className="form-group">
+                  <label>Nombre:</label>
+                  <input
+                    type="text"
+                    value={formSemillero.nombre}
+                    onChange={(e) => setFormSemillero({...formSemillero, nombre: e.target.value})}
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label>Profesor:</label>
+                  <input
+                    type="text"
+                    value={formSemillero.profesor}
+                    onChange={(e) => setFormSemillero({...formSemillero, profesor: e.target.value})}
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label>Proyecto:</label>
+                  <input
+                    type="text"
+                    value={formSemillero.proyecto}
+                    onChange={(e) => setFormSemillero({...formSemillero, proyecto: e.target.value})}
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label>Año:</label>
+                  <input
+                    type="number"
+                    value={formSemillero.año}
+                    onChange={(e) => setFormSemillero({...formSemillero, año: e.target.value})}
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label>Descripción:</label>
+                  <textarea
+                    value={formSemillero.descripcion}
+                    onChange={(e) => setFormSemillero({...formSemillero, descripcion: e.target.value})}
+                    rows="3"
+                  />
+                </div>
+
+                <div className="acciones-formulario">
+                  <button onClick={guardarCambiosSemillero} className="btn-guardar">
+                    💾 Guardar Cambios
+                  </button>
+                  <button 
+                    onClick={() => {
+                      setMostrarFormularioSemillero(false);
+                      setSemilleroSeleccionado(null);
+                    }} 
+                    className="btn-cancelar"
+                  >
+                    ❌ Cancelar
+                  </button>
+                </div>
+              </div>
+            )}
+          </section>
+        )}
+
+        {/* SECCIÓN DE CONVOCATORIAS */}
+        {seccionActiva === 'convocatorias' && (
+          <section>
+            <h2>🧩 Gestión de Convocatorias</h2>
+            
+            <div className="search-box mb-3">
+              <input
+                type="text"
+                placeholder="Buscar convocatoria por título..."
+                value={busquedaConvocatoria}
+                onChange={(e) => setBusquedaConvocatoria(e.target.value)}
+              />
+              <button onClick={buscarConvocatoria}>🔍 Buscar</button>
+            </div>
+
+            {resultadosBusquedaConvocatorias.length > 0 && !mostrarFormularioConvocatoria && (
+              <div className="resultados-lista">
+                <h4>Resultados encontrados:</h4>
+                {resultadosBusquedaConvocatorias.map((convocatoria) => (
+                  <div key={convocatoria.id} className="item-resultado">
+                    <span>{convocatoria.titulo} - {convocatoria.tipo} ({convocatoria.año})</span>
+                    <button onClick={() => seleccionarConvocatoria(convocatoria)}>
+                      ✏️ Modificar
+                    </button>
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {mostrarFormularioConvocatoria && convocatoriaSeleccionada && (
+              <div className="formulario-modificacion">
+                <h4>Modificando: {convocatoriaSeleccionada.titulo}</h4>
+                
+                <div className="form-group">
+                  <label>Título:</label>
+                  <input
+                    type="text"
+                    value={formConvocatoria.titulo}
+                    onChange={(e) => setFormConvocatoria({...formConvocatoria, titulo: e.target.value})}
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label>Tipo:</label>
+                  <input
+                    type="text"
+                    value={formConvocatoria.tipo}
+                    onChange={(e) => setFormConvocatoria({...formConvocatoria, tipo: e.target.value})}
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label>Año:</label>
+                  <input
+                    type="number"
+                    value={formConvocatoria.año}
+                    onChange={(e) => setFormConvocatoria({...formConvocatoria, año: e.target.value})}
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label>Descripción:</label>
+                  <textarea
+                    value={formConvocatoria.descripcion}
+                    onChange={(e) => setFormConvocatoria({...formConvocatoria, descripcion: e.target.value})}
+                    rows="3"
+                  />
+                </div>
+
+                <div className="acciones-formulario">
+                  <button onClick={guardarCambiosConvocatoria} className="btn-guardar">
+                    💾 Guardar Cambios
+                  </button>
+                  <button 
+                    onClick={() => {
+                      setMostrarFormularioConvocatoria(false);
+                      setConvocatoriaSeleccionada(null);
+                    }} 
+                    className="btn-cancelar"
+                  >
+                    ❌ Cancelar
+                  </button>
+                </div>
+              </div>
+            )}
+          </section>
+        )}
+
+        {/* SECCIÓN DE REDES */}
+        {seccionActiva === 'redes' && (
+          <section>
+            <h2>🔗 Gestión de Redes</h2>
+            
+            <div className="search-box mb-3">
+              <input
+                type="text"
+                placeholder="Buscar red por nombre..."
+                value={busquedaRed}
+                onChange={(e) => setBusquedaRed(e.target.value)}
+              />
+              <button onClick={buscarRed}>🔍 Buscar</button>
+            </div>
+
+            {resultadosBusquedaRedes.length > 0 && !mostrarFormularioRed && (
+              <div className="resultados-lista">
+                <h4>Resultados encontrados:</h4>
+                {resultadosBusquedaRedes.map((red) => (
+                  <div key={red.id} className="item-resultado">
+                    <span>{red.nombre} - {red.tipo}</span>
+                    <button onClick={() => seleccionarRed(red)}>
+                      ✏️ Modificar
+                    </button>
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {mostrarFormularioRed && redSeleccionada && (
+              <div className="formulario-modificacion">
+                <h4>Modificando: {redSeleccionada.nombre}</h4>
+                
+                <div className="form-group">
+                  <label>Nombre:</label>
+                  <input
+                    type="text"
+                    value={formRed.nombre}
+                    onChange={(e) => setFormRed({...formRed, nombre: e.target.value})}
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label>Descripción:</label>
+                  <textarea
+                    value={formRed.descripcion}
+                    onChange={(e) => setFormRed({...formRed, descripcion: e.target.value})}
+                    rows="3"
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label>Enlace:</label>
+                  <input
+                    type="text"
+                    value={formRed.enlace}
+                    onChange={(e) => setFormRed({...formRed, enlace: e.target.value})}
+                  />
+                </div>
+
+                <div className="acciones-formulario">
+                  <button onClick={guardarCambiosRed} className="btn-guardar">
+                    💾 Guardar Cambios
+                  </button>
+                  <button 
+                    onClick={() => {
+                      setMostrarFormularioRed(false);
+                      setRedSeleccionada(null);
+                    }} 
+                    className="btn-cancelar"
+                  >
+                    ❌ Cancelar
+                  </button>
+                </div>
               </div>
             )}
           </section>
