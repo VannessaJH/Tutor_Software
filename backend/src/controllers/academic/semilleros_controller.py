@@ -28,3 +28,17 @@ def get_semillero_by_id(db: Session, semillero_id: int) -> Optional[Semillero]:
     :return: Objeto Semillero o None.
     """
     return db.query(Semillero).filter(Semillero.id == semillero_id).first()
+
+def update_semillero(db: Session, semillero_id: int, data: dict) -> Semillero:
+    semillero = db.query(Semillero).filter(Semillero.id == semillero_id).first()
+
+    if not semillero:
+        return None
+
+    for key, value in data.items():
+        setattr(semillero, key, value)
+
+    db.commit()
+    db.refresh(semillero)
+
+    return semillero

@@ -6,6 +6,8 @@ from typing import List, Optional
 from models.academic.semilleros import Semillero
 from controllers.academic.semilleros_controller import get_all_semilleros, get_semillero_by_id
 
+from schemas.semillero_schema import SemilleroUpdate
+
 from config.database import get_db 
 
 router = APIRouter(
@@ -38,3 +40,29 @@ def read_semillero(
     if semillero is None:
         raise HTTPException(status_code=404, detail="Semillero no encontrado")
     return semillero
+
+@router.put("/{semillero_id}")
+def update_semillero_route(
+    semillero_id: int,
+    semillero_data: SemilleroUpdate,
+    db: Session = Depends(get_db)
+):
+    """
+    Actualiza los datos de un semillero existente.
+    Solo actualiza los campos enviados (parcial).
+    """
+
+    actualizado = update_semillero(
+        db,
+        semillero_id,
+        semillero_data.dict(exclude_unset=True)
+    )
+
+    if actualizado is None:
+        raise HTTPException(status_code=404, detail="Semillero no encontrado")
+
+    return {
+        "message": "Semillero actualizado correctamente",
+        "semillero": actualizado
+    }
+

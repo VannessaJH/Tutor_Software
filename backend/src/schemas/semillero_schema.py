@@ -32,4 +32,16 @@ class SemilleroResponse(SemilleroBase):
     class Config:
   
         orm_mode = True 
+
+class SemilleroUpdate(BaseModel):
+    nombre: Optional[str]
+    profesor: Optional[str]
+    proyecto: Optional[str]
+    año: Optional[int]
+    descripcion: Optional[str]
+    contacto: Optional[str]
+    activo: Optional[bool]
+
+    class Config:
+        orm_mode = True
   

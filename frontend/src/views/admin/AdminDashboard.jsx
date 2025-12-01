@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import {AuthService } from '../../services/apiService.js';
-import "./AdminDashboard.css"; 
+import { AuthService } from '../../services/apiService.js';
+import "./AdminDashboard.css";
 "import '../../../../backend/src/models/user/usuarios_pendientes';"
 
 export default function AdminDashboard() {
@@ -22,12 +22,40 @@ export default function AdminDashboard() {
     correo: '',
   });
 
-  const [reporteResultados, setReporteResultados] = useState([]); 
-  const [historialEvaluaciones, setHistorialEvaluaciones] = useState([]); 
+  const [reporteResultados, setReporteResultados] = useState([]);
+  const [historialEvaluaciones, setHistorialEvaluaciones] = useState([]);
   const [loadingHistorial, setLoadingHistorial] = useState(false);
 
   const [terminoBusquedaReporte, setTerminoBusquedaReporte] = useState('');
-  const [reporteFiltrado, setReporteFiltrado] = useState([]); 
+  const [reporteFiltrado, setReporteFiltrado] = useState([]);
+
+  // -------- SEMILLEROS --------
+  const [listaSemilleros, setListaSemilleros] = useState([]);
+  const [busquedaSemillero, setBusquedaSemillero] = useState("");
+  const [semilleroSeleccionado, setSemilleroSeleccionado] = useState(null);
+  const [formSemillero, setFormSemillero] = useState({
+    nombre: "",
+    descripcion: ""
+  });
+
+  // -------- CONVOCATORIAS --------
+  const [listaConvocatorias, setListaConvocatorias] = useState([]);
+  const [busquedaConvocatoria, setBusquedaConvocatoria] = useState("");
+  const [convocatoriaSeleccionada, setConvocatoriaSeleccionada] = useState(null);
+  const [formConvocatoria, setFormConvocatoria] = useState({
+    nombre: "",
+    descripcion: ""
+  });
+
+  // -------- REDES --------
+  const [listaRedes, setListaRedes] = useState([]);
+  const [busquedaRed, setBusquedaRed] = useState("");
+  const [redSeleccionada, setRedSeleccionada] = useState(null);
+  const [formRed, setFormRed] = useState({
+    nombre: "",
+    descripcion: ""
+  });
+
 
 
 
@@ -39,7 +67,7 @@ export default function AdminDashboard() {
     }
 
     if (seccionUsuarioActiva === 'eliminar') {
-        cargarTodosLosUsuarios(); 
+      cargarTodosLosUsuarios();
     }
 
     if (seccionUsuarioActiva === 'consultar') {
@@ -51,23 +79,23 @@ export default function AdminDashboard() {
 
 
     if (!reporteResultados || reporteResultados.length === 0 || !terminoBusquedaReporte.trim()) {
-        setReporteFiltrado(reporteResultados);
-        return;
+      setReporteFiltrado(reporteResultados);
+      return;
     }
 
     const termino = terminoBusquedaReporte.toLowerCase();
-    
+
 
     const resultados = reporteResultados.filter(usuario => {
-   
-        const nombreCoincide = usuario.nombre_usuario && usuario.nombre_usuario.toLowerCase().includes(termino);
-        const idCoincide = String(usuario.id_usuario).includes(termino);
-        return nombreCoincide || idCoincide;
+
+      const nombreCoincide = usuario.nombre_usuario && usuario.nombre_usuario.toLowerCase().includes(termino);
+      const idCoincide = String(usuario.id_usuario).includes(termino);
+      return nombreCoincide || idCoincide;
     });
 
     setReporteFiltrado(resultados);
 
-}, [reporteResultados, terminoBusquedaReporte]);
+  }, [reporteResultados, terminoBusquedaReporte]);
 
   const cargarUsuariosPendientes = async () => {
     try {
@@ -82,100 +110,100 @@ export default function AdminDashboard() {
   };
 
   const manejarAceptar = async (usuario) => {
-  
-    
+
+
     const datosUsuario = {
-        nombre: usuario.nombre,
-        correo: usuario.correo, 
-        contrasena: "", 
+      nombre: usuario.nombre,
+      correo: usuario.correo,
+      contrasena: "",
     };
-    
+
     console.log('Datos a enviar:', datosUsuario);
-    
+
     try {
-        const resultado = await AuthService.registrar(datosUsuario);
-        console.log(' Respuesta del registro:', resultado);
-        
-     
-        cargarUsuariosPendientes();
+      const resultado = await AuthService.registrar(datosUsuario);
+      console.log(' Respuesta del registro:', resultado);
+
+
+      cargarUsuariosPendientes();
     } catch (error) {
-        console.error(' Error al aceptar usuario:', error);
+      console.error(' Error al aceptar usuario:', error);
     }
-};
+  };
 
   const manejarRechazar = async (idUsuario) => {
     await AuthService.rechazarUsuario(idUsuario);
-    cargarUsuariosPendientes(); 
+    cargarUsuariosPendientes();
   };
 
   const manejarEliminarUsuario = async (idUsuario) => {
-   
+
 
     try {
-        await AuthService.eliminarUsuario(idUsuario);
-        alert(`Usuario con ID ${idUsuario} eliminado correctamente.`);
-        
-        
-        setUsuarioEncontrado(null);
-        setTerminoBusqueda('');
-        cargarTodosLosUsuarios(); 
+      await AuthService.eliminarUsuario(idUsuario);
+      alert(`Usuario con ID ${idUsuario} eliminado correctamente.`);
+
+
+      setUsuarioEncontrado(null);
+      setTerminoBusqueda('');
+      cargarTodosLosUsuarios();
     } catch (error) {
-        alert(`Error al eliminar usuario: ${error.message}`);
+      alert(`Error al eliminar usuario: ${error.message}`);
     }
   };
 
   const cargarTodosLosUsuarios = async () => {
     try {
-        const data = await AuthService.obtenerTodosLosUsuarios();
-        
-        setTodosLosUsuarios(data); 
-        console.log("Usuarios cargados para la búsqueda:", data);
-    } catch (error) {
-        console.error("Error cargando todos los usuarios:", error);
-    }
-};
+      const data = await AuthService.obtenerTodosLosUsuarios();
 
-  
+      setTodosLosUsuarios(data);
+      console.log("Usuarios cargados para la búsqueda:", data);
+    } catch (error) {
+      console.error("Error cargando todos los usuarios:", error);
+    }
+  };
+
+
   const buscarUsuarioPorNombre = () => {
     if (!terminoBusqueda.trim()) {
-        alert("Por favor, introduce un nombre para buscar.");
-        setUsuarioEncontrado(null);
-        console.log("Buscando término:", terminoBusqueda.toLowerCase());
-        return;
+      alert("Por favor, introduce un nombre para buscar.");
+      setUsuarioEncontrado(null);
+      console.log("Buscando término:", terminoBusqueda.toLowerCase());
+      return;
     }
     console.log("Buscando término:", terminoBusqueda.toLowerCase());
     const encontrado = todosLosUsuarios.find(usuario => {
-    if (usuario && usuario.nombre_usuario) { 
-     
+      if (usuario && usuario.nombre_usuario) {
+
         return usuario.nombre_usuario.toLowerCase().includes(terminoBusqueda.toLowerCase());
-    }
-    return false;
-});
-  
+      }
+      return false;
+    });
+
 
     if (encontrado) {
-        setUsuarioEncontrado(encontrado);
+      setUsuarioEncontrado(encontrado);
     } else {
-        alert(`No se encontró ningún usuario con el nombre: ${terminoBusqueda}`);
-        setUsuarioEncontrado(null);
+      alert(`No se encontró ningún usuario con el nombre: ${terminoBusqueda}`);
+      setUsuarioEncontrado(null);
     }
   };
 
   const handleMenuClick = (opcion) => {
     setSeccionUsuarioActiva(opcion);
-    setSeccionActiva("gestion-usuarios"); 
-    setMenuVisible(false); 
+    setSeccionActiva("gestion-usuarios");
+    setMenuVisible(false);
   };
 
-  
 
-const manejarBusquedaModificar = async () => {
+
+  const manejarBusquedaModificar = async () => {
     if (!terminoBusquedaModificar.trim()) {
       alert("Por favor, introduce un nombre para buscar.");
       setResultadosBusqueda([]);
       return;
     }
-    
+
     try {
       const data = await AuthService.buscarUsuario(terminoBusquedaModificar);
       setResultadosBusqueda(data);
@@ -192,7 +220,7 @@ const manejarBusquedaModificar = async () => {
       nombre: usuario.nombre,
       correo: usuario.correo,
     });
-    setResultadosBusqueda([]); 
+    setResultadosBusqueda([]);
   };
 
   const manejarCambioFormulario = (e) => {
@@ -208,14 +236,14 @@ const manejarBusquedaModificar = async () => {
     if (!usuarioSeleccionado) return;
 
     const payload = {
-        nombre: datosModificacion.nombre,
-        correo: datosModificacion.correo,
+      nombre: datosModificacion.nombre,
+      correo: datosModificacion.correo,
     };
 
     try {
       const resultado = await AuthService.modificarUsuario(usuarioSeleccionado.id, payload);
       alert(resultado.mensaje);
-      
+
       setUsuarioSeleccionado(null);
       setTerminoBusquedaModificar('');
       setDatosModificacion({ nombre: '', correo: '' });
@@ -233,39 +261,207 @@ const manejarBusquedaModificar = async () => {
       console.log("Reporte de resultados cargado:", data);
     } catch (error) {
       console.error("Error cargando el reporte de resultados:", error);
-    }};
+    }
+  };
 
   const manejarCerrarSesion = () => {
-    
-      AuthService.cerrarSesion();
-      
-      window.location.href = '/login'; 
+
+    AuthService.cerrarSesion();
+
+    window.location.href = '/login';
   };
+
+  // Cargar lista de semilleros (llamar API si existe)
+  const cargarSemilleros = async () => {
+    try {
+      const data = await AuthService.obtenerSemilleros();
+      setListaSemilleros(data);
+    } catch (error) {
+      console.error("Error cargando semilleros:", error);
+    }
+  };
+
+  // Buscar semillero
+  const buscarSemillero = () => {
+    if (!busquedaSemillero.trim()) {
+      alert("Escribe un nombre para buscar.");
+      return;
+    }
+
+    const encontrado = listaSemilleros.find(s =>
+      s.nombre.toLowerCase().includes(busquedaSemillero.toLowerCase())
+    );
+
+    if (!encontrado) {
+      alert("No se encontró ningún semillero.");
+      setSemilleroSeleccionado(null);
+      return;
+    }
+
+    setSemilleroSeleccionado(encontrado);
+    setFormSemillero({
+      nombre: encontrado.nombre,
+      descripcion: encontrado.descripcion
+    });
+    
+  };
+
+  // Guardar cambios
+  const guardarCambiosSemillero = async () => {
+
+    if (!formSemillero.nombre || !formSemillero.descripcion) {
+      alert("Completa todos los campos");
+      return;
+    }
+
+    try {
+      await AuthService.modificarSemillero(semilleroSeleccionado.id, formSemillero);
+      alert("Semillero actualizado");
+      cargarSemilleros();
+      setSemilleroSeleccionado(null);
+    } catch (error) {
+      console.error("Error al actualizar:", error);
+    }
+  };
+
+  // ------------ Cargar convocatorias ------------
+const cargarConvocatorias = async () => {
+  try {
+    const data = await AuthService.obtenerConvocatorias();
+    setListaConvocatorias(data);
+  } catch (error) {
+    console.error("Error cargando convocatorias:", error);
+  }
+};
+
+// ------------ Buscar convocatoria ------------
+const buscarConvocatoria = () => {
+  if (!busquedaConvocatoria.trim()) {
+    alert("Escribe un nombre para buscar.");
+    return;
+  }
+
+  const encontrada = listaConvocatorias.find(c =>
+    c.nombre.toLowerCase().includes(busquedaConvocatoria.toLowerCase())
+  );
+
+  if (!encontrada) {
+    alert("No se encontró ninguna convocatoria.");
+    setConvocatoriaSeleccionada(null);
+    return;
+  }
+
+  setConvocatoriaSeleccionada(encontrada);
+  setFormConvocatoria({
+    nombre: encontrada.nombre,
+    descripcion: encontrada.descripcion
+  });
+};
+
+// ------------ Guardar cambios ------------
+const guardarCambiosConvocatoria = async () => {
+  if (!formConvocatoria.nombre || !formConvocatoria.descripcion) {
+    alert("Completa todos los campos");
+    return;
+  }
+
+  try {
+    await AuthService.modificarConvocatoria(
+      convocatoriaSeleccionada.id,
+      formConvocatoria
+    );
+
+    alert("Convocatoria actualizada");
+    cargarConvocatorias();
+    setConvocatoriaSeleccionada(null);
+
+  } catch (error) {
+    console.error("Error al actualizar:", error);
+  }
+};
+
+
+// ------------ Cargar redes ------------
+const cargarRedes = async () => {
+  try {
+    const data = await AuthService.obtenerRedes();
+    setListaRedes(data);
+  } catch (error) {
+    console.error("Error cargando redes:", error);
+  }
+};
+
+// ------------ Buscar red ------------
+const buscarRed = () => {
+  if (!busquedaRed.trim()) {
+    alert("Escribe un nombre para buscar.");
+    return;
+  }
+
+  const encontrada = listaRedes.find(r =>
+    r.nombre.toLowerCase().includes(busquedaRed.toLowerCase())
+  );
+
+  if (!encontrada) {
+    alert("No se encontró ninguna red.");
+    setRedSeleccionada(null);
+    return;
+  }
+
+  setRedSeleccionada(encontrada);
+  setFormRed({
+    nombre: encontrada.nombre,
+    descripcion: encontrada.descripcion
+  });
+};
+
+// ------------ Guardar cambios ------------
+const guardarCambiosRed = async () => {
+  if (!formRed.nombre || !formRed.descripcion) {
+    alert("Completa todos los campos");
+    return;
+  }
+
+  try {
+    await AuthService.modificarRed(redSeleccionada.id, formRed);
+    alert("Red actualizada");
+
+    cargarRedes();
+    setRedSeleccionada(null);
+
+  } catch (error) {
+    console.error("Error al actualizar:", error);
+  }
+};
+
+
+
+
 
   const cargarHistorialEvaluaciones = async (idUsuario) => {
     setLoadingHistorial(true);
-    setUsuarioSeleccionado(idUsuario); 
+    setUsuarioSeleccionado(idUsuario);
 
     try {
-        const data = await AuthService.obtenerHistorialEvaluaciones(idUsuario);
-        setHistorialEvaluaciones(data);
+      const data = await AuthService.obtenerHistorialEvaluaciones(idUsuario);
+      setHistorialEvaluaciones(data);
     } catch (error) {
-        console.error("No se pudo cargar el historial:", error);
-        setHistorialEvaluaciones([]); 
+      console.error("No se pudo cargar el historial:", error);
+      setHistorialEvaluaciones([]);
     } finally {
-        setLoadingHistorial(false);
+      setLoadingHistorial(false);
     }
-};
+  };
 
 
-const volverAlReporte = () => {
+  const volverAlReporte = () => {
     setUsuarioSeleccionado(null);
     setHistorialEvaluaciones([]);
-};
+  };
 
 
 
-  
+
 
   return (
     <div className="admin-dashboard">
@@ -277,33 +473,33 @@ const volverAlReporte = () => {
       <nav className="admin-nav">
 
         <div className="menu-dropdown">
-              <button 
-                  onClick={() => setMenuVisible(!menuVisible)}
-                  className="btn-menu"
-              >
-                  ⚙️ Gestión de Usuarios 
-              </button>
-              {menuVisible && (
-                  <div className="dropdown-content">
-                      <button onClick={() => handleMenuClick("eliminar")}>🗑️ Eliminar Usuario</button>
-                      <button onClick={() => handleMenuClick("modificar")}>✏️ Modificar Usuario</button>
-                      <button onClick={() => handleMenuClick("consultar")}>📋 Consultar Resultados</button>
-                  </div>
-              )}
-          </div>
+          <button
+            onClick={() => setMenuVisible(!menuVisible)}
+            className="btn-menu"
+          >
+            ⚙️ Gestión de Usuarios
+          </button>
+          {menuVisible && (
+            <div className="dropdown-content">
+              <button onClick={() => handleMenuClick("eliminar")}>🗑️ Eliminar Usuario</button>
+              <button onClick={() => handleMenuClick("modificar")}>✏️ Modificar Usuario</button>
+              <button onClick={() => handleMenuClick("consultar")}>📋 Consultar Resultados</button>
+            </div>
+          )}
+        </div>
 
 
-      <button 
-        onClick={manejarCerrarSesion} 
-       
-        style={{ backgroundColor: '#B71C1C', color: 'white' }} 
-    >
-        🚪 Cerrar Sesión
-      </button>
-      <button onClick={() => setSeccionActiva("semilleros")}>📚 Semilleros</button>
-      <button onClick={() => setSeccionActiva("convocatorias")}>🧩 Convocatorias</button>
-      <button onClick={() => setSeccionActiva("usuarios")}>👥 Usuarios Pendientes</button> 
-      <button onClick={() => setSeccionActiva("evaluaciones")}>📝 Evaluaciones</button>
+        <button
+          onClick={manejarCerrarSesion}
+
+          style={{ backgroundColor: '#B71C1C', color: 'white' }}
+        >
+          🚪 Cerrar Sesión
+        </button>
+        <button onClick={() => setSeccionActiva("semilleros")}>📚 Semilleros</button>
+        <button onClick={() => setSeccionActiva("convocatorias")}>🧩 Convocatorias</button>
+        <button onClick={() => setSeccionActiva("usuarios")}>👥 Usuarios Pendientes</button>
+        <button onClick={() => setSeccionActiva("evaluaciones")}>📝 Evaluaciones</button>
       </nav>
 
       <main className="admin-content">
@@ -327,17 +523,17 @@ const volverAlReporte = () => {
                   <h4>{usuario.nombre}</h4>
                   <p>Email: {usuario.correo}</p>
                   <div className="acciones-usuario">
-                    <button 
+                    <button
                       className="btn-aceptar"
                       onClick={() => manejarAceptar(usuario)}
                     >
-                        Aceptar
+                      Aceptar
                     </button>
-                    <button 
+                    <button
                       className="btn-rechazar"
                       onClick={() => manejarRechazar(usuario.id)}
                     >
-                        Rechazar
+                      Rechazar
                     </button>
                   </div>
                 </div>
@@ -358,192 +554,192 @@ const volverAlReporte = () => {
         </section>
 
         {seccionActiva === "gestion-usuarios" && seccionUsuarioActiva === "eliminar" && (
-            <section>
-                <h2>🗑️ Eliminar Usuario por Nombre</h2>
-                <p>Busca un usuario por su nombre para confirmar su eliminación.</p>
+          <section>
+            <h2>🗑️ Eliminar Usuario por Nombre</h2>
+            <p>Busca un usuario por su nombre para confirmar su eliminación.</p>
 
-             
-                <div className="search-box">
-                    <input
-                        type="text"
-                        placeholder="Introduce el nombre completo"
-                        value={terminoBusqueda}
-                        onChange={(e) => setTerminoBusqueda(e.target.value)}
-                    />
-                    <button onClick={buscarUsuarioPorNombre}>Buscar</button>
+
+            <div className="search-box">
+              <input
+                type="text"
+                placeholder="Introduce el nombre completo"
+                value={terminoBusqueda}
+                onChange={(e) => setTerminoBusqueda(e.target.value)}
+              />
+              <button onClick={buscarUsuarioPorNombre}>Buscar</button>
+            </div>
+
+            {usuarioEncontrado ? (
+              <div className="usuario-confirmacion-card">
+                <h3>Usuario Encontrado:</h3>
+                <p><strong>ID:</strong> {usuarioEncontrado.id}</p>
+                <p><strong>Nombre:</strong> {usuarioEncontrado.nombre_usuario}</p>
+                <p><strong>Email:</strong> {usuarioEncontrado.correo}</p>
+
+                <div className="confirmacion-accion">
+                  <button
+                    className="btn-eliminar-confirmar"
+                    onClick={() => manejarEliminarUsuario(usuarioEncontrado.id)}
+                  >
+                    Eliminar
+                  </button>
+                  <button
+                    className="btn-cancelar"
+                    onClick={() => { setUsuarioEncontrado(null); setTerminoBusqueda(''); }}
+                  >
+                    Cancelar
+                  </button>
                 </div>
-
-                {usuarioEncontrado ? (
-                    <div className="usuario-confirmacion-card">
-                        <h3>Usuario Encontrado:</h3>
-                        <p><strong>ID:</strong> {usuarioEncontrado.id}</p>
-                        <p><strong>Nombre:</strong> {usuarioEncontrado.nombre_usuario}</p>
-                        <p><strong>Email:</strong> {usuarioEncontrado.correo}</p>
-                        
-                        <div className="confirmacion-accion">
-                            <button 
-                                className="btn-eliminar-confirmar"
-                                onClick={() => manejarEliminarUsuario(usuarioEncontrado.id)}
-                            >
-                               Eliminar
-                            </button>
-                            <button 
-                                className="btn-cancelar"
-                                onClick={() => { setUsuarioEncontrado(null); setTerminoBusqueda(''); }}
-                            >
-                                Cancelar
-                            </button>
-                        </div>
-                    </div>
-                ) : (
-                    terminoBusqueda.trim() && <p>Introduce el nombre y haz clic en Buscar.</p>
-                )}
-            </section>
+              </div>
+            ) : (
+              terminoBusqueda.trim() && <p>Introduce el nombre y haz clic en Buscar.</p>
+            )}
+          </section>
         )}
 
         {seccionActiva === "gestion-usuarios" && seccionUsuarioActiva === "modificar" && (
-            <section>
-                <h2>✏️ Modificar Usuario</h2>
-                
-                {!usuarioSeleccionado && (
-                    <div className="search-box">
-                        <input
-                            type="text"
-                            placeholder="Buscar usuario por nombre..."
-                            value={terminoBusquedaModificar}
-                            onChange={(e) => setTerminoBusquedaModificar(e.target.value)}
-                        />
-                        <button onClick={manejarBusquedaModificar}>Buscar</button>
-                    </div>
-                )}
+          <section>
+            <h2>✏️ Modificar Usuario</h2>
 
-                {resultadosBusqueda.length > 0 && !usuarioSeleccionado && (
-                    <div className="resultados-busqueda">
-                        <h3>Resultados encontrados:</h3>
-                        {resultadosBusqueda.map(usuario => (
-                            <div key={usuario.id} className="usuario-resultado">
-                                <span>{usuario.nombre} ({usuario.correo})</span>
-                                <button onClick={() => seleccionarUsuarioParaModificar(usuario)}>
-                                    Seleccionar
-                                </button>
-                            </div>
-                        ))}
-                    </div>
-                )}
-                
-     
-                {usuarioSeleccionado && (
-                    <div className="formulario-modificacion">
-                        <h3>Modificando a: {usuarioSeleccionado.nombre} (ID: {usuarioSeleccionado.id})</h3>
-                        <form onSubmit={manejarModificacion}>
-                            <div>
-                                <label>Nombre de Usuario</label>
-                                <input
-                                    type="text"
-                                    name="nombre"
-                                    value={datosModificacion.nombre}
-                                    onChange={manejarCambioFormulario}
-                                    required
-                                />
-                            </div>
-                            <div>
-                                <label>Correo Electrónico</label>
-                                <input
-                                    type="email"
-                                    name="correo"
-                                    value={datosModificacion.correo}
-                                    onChange={manejarCambioFormulario}
-                                    required
-                                />
-                            </div>
-                            <button type="submit" className="btn-guardar">Guardar Cambios</button>
-                            <button 
-                                type="button" 
-                                className="btn-cancelar"
-                                onClick={() => setUsuarioSeleccionado(null)}
-                            >
-                                Cancelar
-                            </button>
-                        </form>
-                    </div>
-                )}
-            </section>
+            {!usuarioSeleccionado && (
+              <div className="search-box">
+                <input
+                  type="text"
+                  placeholder="Buscar usuario por nombre..."
+                  value={terminoBusquedaModificar}
+                  onChange={(e) => setTerminoBusquedaModificar(e.target.value)}
+                />
+                <button onClick={manejarBusquedaModificar}>Buscar</button>
+              </div>
+            )}
+
+            {resultadosBusqueda.length > 0 && !usuarioSeleccionado && (
+              <div className="resultados-busqueda">
+                <h3>Resultados encontrados:</h3>
+                {resultadosBusqueda.map(usuario => (
+                  <div key={usuario.id} className="usuario-resultado">
+                    <span>{usuario.nombre} ({usuario.correo})</span>
+                    <button onClick={() => seleccionarUsuarioParaModificar(usuario)}>
+                      Seleccionar
+                    </button>
+                  </div>
+                ))}
+              </div>
+            )}
+
+
+            {usuarioSeleccionado && (
+              <div className="formulario-modificacion">
+                <h3>Modificando a: {usuarioSeleccionado.nombre} (ID: {usuarioSeleccionado.id})</h3>
+                <form onSubmit={manejarModificacion}>
+                  <div>
+                    <label>Nombre de Usuario</label>
+                    <input
+                      type="text"
+                      name="nombre"
+                      value={datosModificacion.nombre}
+                      onChange={manejarCambioFormulario}
+                      required
+                    />
+                  </div>
+                  <div>
+                    <label>Correo Electrónico</label>
+                    <input
+                      type="email"
+                      name="correo"
+                      value={datosModificacion.correo}
+                      onChange={manejarCambioFormulario}
+                      required
+                    />
+                  </div>
+                  <button type="submit" className="btn-guardar">Guardar Cambios</button>
+                  <button
+                    type="button"
+                    className="btn-cancelar"
+                    onClick={() => setUsuarioSeleccionado(null)}
+                  >
+                    Cancelar
+                  </button>
+                </form>
+              </div>
+            )}
+          </section>
         )}
 
         {seccionActiva === "gestion-usuarios" && seccionUsuarioActiva === "consultar" && (
-    <section>
-        {usuarioSeleccionado === null ? (
-            <>
+          <section>
+            {usuarioSeleccionado === null ? (
+              <>
                 <h2>Reporte de Resultados de Evaluación</h2>
                 <p>Lista de usuarios y sus resultados más recientes.</p>
 
                 <div className="search-box reporte-search">
-                    <input
-                        type="text"
-                        placeholder="Buscar por nombre o ID..."
-                        value={terminoBusquedaReporte}
-                        onChange={(e) => setTerminoBusquedaReporte(e.target.value)}
-                    />
-                 
+                  <input
+                    type="text"
+                    placeholder="Buscar por nombre o ID..."
+                    value={terminoBusquedaReporte}
+                    onChange={(e) => setTerminoBusquedaReporte(e.target.value)}
+                  />
+
                 </div>
-           
-                
+
+
                 <div className="reporte-lista">
-                    <table>
-               
-                        <tbody>
-                      
-                            {reporteResultados.map(r => (
-                                <tr 
-                                    key={r.id_usuario} 
-                                
-                                    onClick={() => cargarHistorialEvaluaciones(r.id_usuario)} 
-                                    style={{ cursor: 'pointer' }} 
-                                >
-                                    <td>{r.id_usuario}</td>
-                                    <td>{r.nombre_usuario}</td>
-                                    <td>{r.puntaje}</td>
-                                    <td>{new Date(r.fecha).toLocaleDateString()}</td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
+                  <table>
+
+                    <tbody>
+
+                      {reporteResultados.map(r => (
+                        <tr
+                          key={r.id_usuario}
+
+                          onClick={() => cargarHistorialEvaluaciones(r.id_usuario)}
+                          style={{ cursor: 'pointer' }}
+                        >
+                          <td>{r.id_usuario}</td>
+                          <td>{r.nombre_usuario}</td>
+                          <td>{r.puntaje}</td>
+                          <td>{new Date(r.fecha).toLocaleDateString()}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
                 </div>
-            </>
-        ) : (
-         
-            <div className="historial-detalle">
+              </>
+            ) : (
+
+              <div className="historial-detalle">
                 <button onClick={volverAlReporte}>← Volver al Reporte General</button>
                 <h3>Historial de Evaluaciones de Usuario ID: {usuarioSeleccionado}</h3>
-                
+
                 {loadingHistorial ? (
-                    <p>Cargando historial...</p>
+                  <p>Cargando historial...</p>
                 ) : historialEvaluaciones.length > 0 ? (
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>ID Evaluación</th>
-                                <th>Fecha</th>
-                                <th>Puntaje</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {historialEvaluaciones.map(h => (
-                                <tr key={h.id_evaluacion}>
-                                    <td>{h.id_evaluacion}</td>
-                                    <td>{new Date(h.fecha).toLocaleString()}</td>
-                                    <td>{h.puntaje}</td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>ID Evaluación</th>
+                        <th>Fecha</th>
+                        <th>Puntaje</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {historialEvaluaciones.map(h => (
+                        <tr key={h.id_evaluacion}>
+                          <td>{h.id_evaluacion}</td>
+                          <td>{new Date(h.fecha).toLocaleString()}</td>
+                          <td>{h.puntaje}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
                 ) : (
-                    <p>Este usuario no tiene evaluaciones registradas.</p>
+                  <p>Este usuario no tiene evaluaciones registradas.</p>
                 )}
-            </div>
+              </div>
+            )}
+          </section>
         )}
-    </section>
-)}
 
 
       </main>
