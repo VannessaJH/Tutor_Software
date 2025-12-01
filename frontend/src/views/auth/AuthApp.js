@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Login from './Login.js';
 import Register from './Register.js';
 import  AdminDashboard from '../admin/AdminDashboard.jsx';
+import ContentView from '../student/ContenidoView.jsx';
 
 import './AuthCommon.css';
 import './Login.css';
@@ -20,17 +21,12 @@ export default function AuthApp() {
         localStorage.setItem('user', JSON.stringify(userData));
     };
 
-    useEffect(() => {
-        if (user && user.rol !== 'Administrador') {
-            window.location.href = '/Estudiante.html';
-        }
-    }, [user]);
 
     if (user) {
         if (user.rol === 'Administrador') {
             return <AdminDashboard />;
         } else {
-            return <div>Redirigiendo al dashboard de estudiante...</div>;
+            return <ContentView user={user} />;
         }
     }
 

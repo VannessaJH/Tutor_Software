@@ -22,7 +22,12 @@ export default function AdminDashboard() {
     correo: '',
   });
 
-  const [reporteResultados, setReporteResultados] = useState([]);
+  const [reporteResultados, setReporteResultados] = useState([]); 
+  const [historialEvaluaciones, setHistorialEvaluaciones] = useState([]); 
+  const [loadingHistorial, setLoadingHistorial] = useState(false);
+
+  const [terminoBusquedaReporte, setTerminoBusquedaReporte] = useState('');
+  const [reporteFiltrado, setReporteFiltrado] = useState([]); 
 
 
 
@@ -40,9 +45,29 @@ export default function AdminDashboard() {
     if (seccionUsuarioActiva === 'consultar') {
       cargarReporteResultados();
     }
-
-
   }, [seccionActiva, seccionUsuarioActiva]);
+
+  useEffect(() => {
+
+
+    if (!reporteResultados || reporteResultados.length === 0 || !terminoBusquedaReporte.trim()) {
+        setReporteFiltrado(reporteResultados);
+        return;
+    }
+
+    const termino = terminoBusquedaReporte.toLowerCase();
+    
+
+    const resultados = reporteResultados.filter(usuario => {
+   
+        const nombreCoincide = usuario.nombre_usuario && usuario.nombre_usuario.toLowerCase().includes(termino);
+        const idCoincide = String(usuario.id_usuario).includes(termino);
+        return nombreCoincide || idCoincide;
+    });
+
+    setReporteFiltrado(resultados);
+
+}, [reporteResultados, terminoBusquedaReporte]);
 
   const cargarUsuariosPendientes = async () => {
     try {
@@ -217,6 +242,29 @@ const manejarBusquedaModificar = async () => {
       window.location.href = '/login'; 
   };
 
+  const cargarHistorialEvaluaciones = async (idUsuario) => {
+    setLoadingHistorial(true);
+    setUsuarioSeleccionado(idUsuario); 
+
+    try {
+        const data = await AuthService.obtenerHistorialEvaluaciones(idUsuario);
+        setHistorialEvaluaciones(data);
+    } catch (error) {
+        console.error("No se pudo cargar el historial:", error);
+        setHistorialEvaluaciones([]); 
+    } finally {
+        setLoadingHistorial(false);
+    }
+};
+
+
+const volverAlReporte = () => {
+    setUsuarioSeleccionado(null);
+    setHistorialEvaluaciones([]);
+};
+
+
+
   
 
   return (
@@ -254,7 +302,7 @@ const manejarBusquedaModificar = async () => {
       </button>
       <button onClick={() => setSeccionActiva("semilleros")}>📚 Semilleros</button>
       <button onClick={() => setSeccionActiva("convocatorias")}>🧩 Convocatorias</button>
-      <button onClick={() => setSeccionActiva("usuarios")}>👥 Usuarios</button> 
+      <button onClick={() => setSeccionActiva("usuarios")}>👥 Usuarios Pendientes</button> 
       <button onClick={() => setSeccionActiva("evaluaciones")}>📝 Evaluaciones</button>
       </nav>
 
@@ -423,38 +471,79 @@ const manejarBusquedaModificar = async () => {
         )}
 
         {seccionActiva === "gestion-usuarios" && seccionUsuarioActiva === "consultar" && (
-            <section>
-                <h2>📋 Reporte de Resultados de Evaluación</h2>
-                <p>Lista de usuarios y sus resultados de la evaluación única.</p>
-                
-                {reporteResultados.length > 0 ? (
-                    <div className="reporte-lista">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Nombre de Usuario</th>
-                                    <th>Puntaje</th>
-                                    <th>Fecha</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {reporteResultados.map(r => (
-                                    <tr key={r.id_usuario}>
-                                        <td>{r.id_usuario}</td>
-                                        <td>{r.nombre_usuario}</td>
-                                        <td>{r.puntaje} / 100</td>
-                                        <td>{new Date(r.fecha).toLocaleDateString()}</td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
-                    </div>
-                ) : (
-                    <p>Cargando resultados o no hay evaluaciones registradas.</p>
-                )}
-            </section>
-        )}
+    <section>
+        {usuarioSeleccionado === null ? (
+            <>
+                <h2>Reporte de Resultados de Evaluación</h2>
+                <p>Lista de usuarios y sus resultados más recientes.</p>
+
+                <div className="search-box reporte-search">
+                    <input
+                        type="text"
+                        placeholder="Buscar por nombre o ID..."
+                        value={terminoBusquedaReporte}
+                        onChange={(e) => setTerminoBusquedaReporte(e.target.value)}
+                    />
+                 
+                </div>
+           
+                
+                <div className="reporte-lista">
+                    <table>
+               
+                        <tbody>
+                      
+                            {reporteResultados.map(r => (
+                                <tr 
+                                    key={r.id_usuario} 
+                                
+                                    onClick={() => cargarHistorialEvaluaciones(r.id_usuario)} 
+                                    style={{ cursor: 'pointer' }} 
+                                >
+                                    <td>{r.id_usuario}</td>
+                                    <td>{r.nombre_usuario}</td>
+                                    <td>{r.puntaje}</td>
+                                    <td>{new Date(r.fecha).toLocaleDateString()}</td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
+            </>
+        ) : (
+         
+            <div className="historial-detalle">
+                <button onClick={volverAlReporte}>← Volver al Reporte General</button>
+                <h3>Historial de Evaluaciones de Usuario ID: {usuarioSeleccionado}</h3>
+                
+                {loadingHistorial ? (
+                    <p>Cargando historial...</p>
+                ) : historialEvaluaciones.length > 0 ? (
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID Evaluación</th>
+                                <th>Fecha</th>
+                                <th>Puntaje</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {historialEvaluaciones.map(h => (
+                                <tr key={h.id_evaluacion}>
+                                    <td>{h.id_evaluacion}</td>
+                                    <td>{new Date(h.fecha).toLocaleString()}</td>
+                                    <td>{h.puntaje}</td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                ) : (
+                    <p>Este usuario no tiene evaluaciones registradas.</p>
+                )}
+            </div>
+        )}
+    </section>
+)}
 
 
       </main>

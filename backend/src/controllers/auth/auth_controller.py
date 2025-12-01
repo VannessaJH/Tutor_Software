@@ -239,7 +239,7 @@ class AuthController:
             reporte = (
                 db.query(
                     Usuario.id.label("id_usuario"),
-                    Usuario.nombre.label("nombre_usuario"), 
+                    Usuario.nombre_usuario.label("nombre_usuario"), 
                     subconsulta_ranking.c.puntaje.label("puntaje_reciente"), 
                     subconsulta_ranking.c.fecha.label("fecha_evaluacion")    
                 )
@@ -266,5 +266,31 @@ class AuthController:
                 status_code=500, 
                 detail="Error interno del servidor al obtener el reporte de resultados."
             )
+            
+    @staticmethod
+    def obtener_historial_evaluaciones(db: Session, id_usuario: int):
+        """
+        Devuelve el listado completo de todas las evaluaciones de un usuario,
+        ordenadas por fecha descendente.
+        """
+        evaluaciones = (
+            db.query(EvaluacionUsuario)
+            .filter(EvaluacionUsuario.id_usuario == id_usuario)
+            .order_by(desc(EvaluacionUsuario.fecha)) 
+            .all()
+        )
+
+        if not evaluaciones:
+            return [] 
+
+        return [
+            {
+                "id_evaluacion": e.id_evaluacion,
+                "puntaje": e.puntaje,
+                "fecha": e.fecha.isoformat(),
+         
+            } 
+            for e in evaluaciones
+        ]
         
     

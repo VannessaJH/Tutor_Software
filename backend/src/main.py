@@ -1,7 +1,13 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from routes.auth_routes import router as auth_router
+# Importar el router de autenticación (ya existente)
+from routes.auth_routes import router as auth_router 
+#  Importar el nuevo router del estudiante (desde routes/routes/student_routes.py)
+from routes.student_routes import student_bp as student_router 
 import uvicorn
+
+# Importar la nueva ruta de semilleros
+from routes.semilleros import router as semilleros_router 
 
 print("INICIANDO SCRIPT MAIN.PY")
 
@@ -16,14 +22,31 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# --- Conexión de Rutas ---
+
+# 1. Rutas de Autenticación
 try:
-    from routes.auth_routes import router as auth_router
-    print(" Auth routes importadas correctamente")
+    # Esta importación ya estaba, la incluimos por completitud
+    app.include_router(auth_router)
+    print(" Rutas de Autenticación importadas correctamente")
 except Exception as e:
-    print(f"Error importando auth routes: {e}")
+    print(f"Error al incluir rutas de Autenticación: {e}")
 
+# 2. Rutas del Estudiante (¡NUEVAS!)
+try:
+    # Conecta el APIRouter definido en student_routes.py
+    app.include_router(student_router)
+    print(" Rutas de Estudiante importadas y conectadas correctamente")
+except Exception as e:
+    print(f"Error al incluir rutas de Estudiante: {e}")
 
-app.include_router(auth_router)
+# 3. Rutas Académicas: Semilleros (¡NUEVAS!)
+try:
+    # Conecta el APIRouter definido en routes/academic/semilleros.py
+    app.include_router(semilleros_router)
+    print(" Rutas de Semilleros importadas y conectadas correctamente")
+except Exception as e:
+    print(f"Error al incluir rutas de Semilleros: {e}")
 
 
 @app.get("/")

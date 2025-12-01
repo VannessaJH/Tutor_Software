@@ -117,3 +117,10 @@ async def obtener_reporte_resultados(db: Session = Depends(get_db)):
     """Obtener el reporte de resultados de evaluación (puntaje más alto) para todos los usuarios."""
     print("ENDPOINT /resultados/reporte: Solicitud de reporte de resultados de evaluación.")
     return AuthController.obtener_reporte_resultados(db)
+
+@router.get("/evaluaciones/usuario/{id_usuario}")
+async def obtener_evaluaciones_por_usuario(id_usuario: int, db: Session = Depends(get_db)):
+    """Obtiene TODAS las evaluaciones registradas para un ID de usuario específico."""
+    print(f"ENDPOINT: Solicitud de historial de evaluaciones para ID: {id_usuario}")
+ 
+    return AuthController.obtener_historial_evaluaciones(db, id_usuario)

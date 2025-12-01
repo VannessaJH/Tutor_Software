@@ -172,6 +172,32 @@ async obtenerTodosLosUsuarios() {
         localStorage.removeItem('userRole'); 
        
         return true; 
+    },
+
+    obtenerHistorialEvaluaciones: async (idUsuario) => {
+    const url = `${API_BASE_URL}/evaluaciones/usuario/${idUsuario}`;
+    try {
+        const token = localStorage.getItem('token');
+        const response = await fetch(url, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`, 
+            },
+        });
+
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.detail || `Error al cargar el historial: ${response.status}`);
+        }
+
+        return await response.json();
+    } catch (error) {
+        console.error(`Error en obtenerHistorialEvaluaciones para ID ${idUsuario}:`, error);
+        throw error;
     }
+
+}
+
 };
 
