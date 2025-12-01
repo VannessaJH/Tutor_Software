@@ -21,6 +21,7 @@ export default function AuthApp() {
         localStorage.setItem('user', JSON.stringify(userData));
     };
 
+    //Redirige según el rol del usuario
 
     if (user) {
         if (user.rol === 'Administrador') {
